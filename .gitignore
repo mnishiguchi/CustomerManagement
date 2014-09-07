@@ -45,3 +45,6 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+# Windows thumbnail cache
+Thumbs.db
