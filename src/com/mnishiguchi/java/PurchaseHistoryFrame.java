@@ -1,0 +1,139 @@
+package com.mnishiguchi.java;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Stack;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
+
+public class PurchaseHistoryFrame extends JFrame
+{
+	// constant
+	public static final String FORMAT_DATE = "yyyy-MM-dd HH:mm" ;  // 2014-08-22 16:24
+	public static final String FORMAT_AMOUNT = "%.2f";      // 1234.56
+	
+	// instance variables
+	private JLabel label1;
+	private JButton button1;
+	private JTextArea textArea1;
+	
+	// constructor
+	public PurchaseHistoryFrame(Customer c)
+	{
+		// configuration of the frame
+		this.setSize(400, 250);
+		this.setResizable(false);
+	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    this.setTitle("Purchase History");
+	    this.setLocationRelativeTo(null);  // put it at the center of the screen
+
+        // get ustomer's info and purchase history
+	    String prefix = c.getPrefix();    // "Mr." or "Ms."
+	    String lastName = c.getLastName();
+	    String phoneNumber = c.getPhoneNumber();
+	    Stack<Purchase> purchaseList =  ReadFile.getPurchaseList(c);
+
+	    // create a panel with BorderLayout
+	    JPanel panel1 = new JPanel();
+	    panel1.setLayout(new BorderLayout());
+	    
+	    // create a Box
+	    Box box1 = Box.createHorizontalBox();
+	    
+	    // create a label
+	    label1 = new JLabel(prefix + " " + lastName + " - " + phoneNumber);
+	    
+	    // create button with an event handler
+	    button1 = new JButton("Add New Purchase");
+	    OnButtonClickListener handle = new OnButtonClickListener();
+	    button1.addActionListener(handle);
+	    
+	    // add label and button to box1
+	    box1.add( label1 );
+	    box1.add( Box.createHorizontalGlue() );  // to separate components as far as possible
+	    box1.add( button1 );
+	    box1.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+	    
+    	// Date Format 2014-08-22 16:24
+    	DateFormat format1 = new SimpleDateFormat(FORMAT_DATE);
+    	
+    	// create a table model	
+      	Object[] tableRow = new Object[2];       // [0]=>date; [1]=>amount
+      	Object[] tableHead = {"Date", "Amount(US$)"};
+      	DefaultTableModel tableModel = new DefaultTableModel(tableHead, 0);    // initially no row
+        
+    	// ensure that purchaseList is not null
+    	if ( purchaseList == null || purchaseList.isEmpty() )
+    	{
+    		tableRow[0] = "(no data)";
+    		tableRow[1] = "(no data)";
+    		tableModel.addRow(tableRow);
+    	}
+    	else
+    	{
+    		Purchase record;    // temporary storage for each purchase record
+	    	while (purchaseList.isEmpty() == false)
+		    {
+		    	// pop a record
+		    	record = purchaseList.pop();
+		    	
+		    	// append to the tableRows array
+		    	tableRow[0] = format1.format( record.getDate() ) ;
+		    	tableRow[1] =  String.format( FORMAT_AMOUNT, record.getAmount() );
+		    	tableModel.addRow(tableRow);
+		    }
+    	}  	
+    	// create a table
+	    JTable table = new JTable(tableModel);
+	    
+	    // format each table row (align center)
+      	DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+      	centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+      	table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+      	table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+	    
+	    // add table to scroll pane
+	    JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
+	    		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	    scroll.setBorder(BorderFactory.createLoweredBevelBorder());
+	    
+	    // add components to the frame
+	    this.add(box1, BorderLayout.NORTH);    // box with label & button
+	    this.add(scroll);                                                // table component with text area
+	    
+	    // now frame is ready to be displayed
+	    this.setVisible(true);
+	}
+	
+	/**
+	 * Inner class to listen for a click on buttons
+	 */
+	private class OnButtonClickListener implements ActionListener
+	{
+		@Override
+		public void actionPerformed(ActionEvent e)
+		{
+			if (e.getSource() == button1)                       // respond to button1
+			{
+				 // show a prompt for a new purchase
+				JFrame frame = new AddPurchasePrompt();
+				
+				PurchaseHistoryFrame.this.dispose();    // hide this frame	
+			}
+		}
+	}
+}
