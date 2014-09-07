@@ -1,6 +1,6 @@
 CustomerManagement
 ==================
-CustomerManagement is a simple Java Swing application for a small-size mom-and-pop store to keep customers purchase records.
+#### CustomerManagement is a simple Java Swing application for a small-size mom-and-pop store to keep customers purchase records.
 
 ## DESCRIPTION:
 - Customer Infomation consists of last name, first name, phone number, zip code and prefix(Mr or Ms). It is stored in customer_data/customers.txt(tab-separated values).
@@ -8,7 +8,8 @@ CustomerManagement is a simple Java Swing application for a small-size mom-and-p
 - Upon execution, a window with the main menu pops up, where there are choices of "create an acount", "show all accounts", "search by last name", "search by phone number".
 
 ## USAGE:
-- In the directory where you placed the app, create a directory named "customer_data", where customers data files are automatically created and stored.
+- In the directory where you placed the app, create a directory named "customer_data". For instance, I create a directory "CustomerManagement", in which I put the excutable "CustomerManagement.exe" and create a directory "customer_data.
+- Customers data files will be automatically created, updated and stored as needed.
 
 ## SAMPLE IMAGES:
 ![](https://github.com/mnishiguchi/CustomerManagement/blob/master/img/customer_management.main_menu.png)
