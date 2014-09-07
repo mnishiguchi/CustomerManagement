@@ -10,5 +10,9 @@ CustomerManagement is a simple Java Swing application for a small-size mom-and-p
 ## USAGE:
 - In the directory where you placed the app, create a directory named "customer_data", where customers data files are automatically created and stored.
 
-## SAMPLE IMAGES
+## SAMPLE IMAGES:
 ![](https://github.com/mnishiguchi/CustomerManagement/blob/master/img/customer_management.main_menu.png)
+![](https://github.com/mnishiguchi/CustomerManagement/blob/master/img/customer_management.create.png)
+![](https://github.com/mnishiguchi/CustomerManagement/blob/master/img/customer_management.account_list.png)
+![](https://github.com/mnishiguchi/CustomerManagement/blob/master/img/customer_management.search_name.png)
+![](https://github.com/mnishiguchi/CustomerManagement/blob/master/img/customer_management.search_phone.png)
