@@ -1,4 +1,6 @@
 package com.mnishiguchi.java;
+
+
 /** Represents a customer */
 public class Customer
 {

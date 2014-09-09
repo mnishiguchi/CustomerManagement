@@ -158,4 +158,13 @@ public class ReadFile
     	
     	return purchaseData; 
     }
+    
+    public static Invoice getInvoice(String invoiceNumber)
+    {
+    	Invoice inv = null;
+    	// TODO
+    	// TODO
+    	// TODO
+    	return inv;
+    }
 }
