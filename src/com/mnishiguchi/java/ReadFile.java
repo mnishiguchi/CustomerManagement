@@ -16,7 +16,7 @@ public class ReadFile
 {
 	// Static constants
 	public static final String DELIMITER = "\t";
-	public static final String PATH = "C:customer_data\\";
+	public static final String PATH_CUSTOMER = "C:customer_data\\";
 	public static final String PATH_INVOICE = "C:invoice\\";
 	public static final DateFormat FORMAT_DATE =
         new SimpleDateFormat("yyyy-MM-dd HH:mm");  // 2014-08-22 16:24
@@ -55,7 +55,7 @@ public class ReadFile
     public static ArrayList<Customer> getCustomerList()
     {
     	// get data from the file "customers.txt"
-    	ArrayList<String> lines = getDataFromFile(PATH + "customers.txt");	// to store raw data
+    	ArrayList<String> lines = getDataFromFile(PATH_CUSTOMER + "customers.txt");	// to store raw data
     	String[] data;	// to store processed data
     	
     	// ensure that some customers exist
@@ -99,7 +99,7 @@ public class ReadFile
         double amount = 0.0;
     	
         // get data from the file 2021234567.txt
-        ArrayList<String> lines = getDataFromFile( PATH +  c.getPhoneNumber() + ".txt" );	// to store raw data
+        ArrayList<String> lines = getDataFromFile( PATH_CUSTOMER +  c.getPhoneNumber() + ".txt" );	// to store raw data
         
     	String[] data;       // to store processed data
         for ( String line: lines )

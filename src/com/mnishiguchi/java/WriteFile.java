@@ -16,10 +16,14 @@ public class WriteFile
 {
     // constants
     public static final String DELIMITER = "\t";
-	public static final String FORMAT_DATE = "yyyy-MM-dd HH:mm" ;  // 2014-08-22 16:24
+	public static final String PATH_CUSTOMER = "C:customer_data\\";
+	public static final String PATH_INVOICE = "C:invoice\\";
 	public static final String FORMAT_AMOUNT = "%.2f";      // 1234.56
-	public static final String PATH = "C:customer_data\\"; 
-    
+	public static final DateFormat FORMAT_DATE =
+        new SimpleDateFormat("yyyy-MM-dd HH:mm");  // 2014-08-22 16:24
+	
+	
+	
 	/**
      * @param filename    the name of a file that a PrintWriter object will be associated with.
      * @return a PrintWriter object associated with a specified file if its creation is successful. Otherwise null.
@@ -52,7 +56,7 @@ public class WriteFile
      */
     public static void writeCustomer(ArrayList<Customer> customers)
     {
-    	String filename1 = PATH + "customers.txt";
+    	String filename1 = PATH_CUSTOMER + "customers.txt";
     	
     	// open file
     	PrintWriter out = openWriter(filename1);
@@ -76,7 +80,7 @@ public class WriteFile
      */
     public static void writeCustomer(Customer c)
     {
-    	String filename1 = PATH + "customers.txt";
+    	String filename1 = PATH_CUSTOMER + "customers.txt";
     	
     	// open file
     	PrintWriter out = openWriter(filename1);
@@ -99,11 +103,8 @@ public class WriteFile
      */
     public static void writePurchase(Customer c, ArrayList<Purchase> data)
     {
-        // Date Format
-    	DateFormat df = new SimpleDateFormat(FORMAT_DATE);
-    	
 		// filename 2021234567.txt
-		String filename2 = PATH + c.getPhoneNumber() + ".txt";
+		String filename2 = PATH_CUSTOMER + c.getPhoneNumber() + ".txt";
 		
 		// open file
     	PrintWriter out = openWriter(filename2); 	
@@ -111,7 +112,7 @@ public class WriteFile
     	String line = "";
     	for (Purchase p: data)                   // for each purchase
     	{
-        	line = df.format( p.getDate() );
+        	line = FORMAT_DATE.format( p.getDate() );
         	line += DELIMITER + String.format( FORMAT_AMOUNT, p.getAmount() ); 
         }
         out.close();  // close file
@@ -124,16 +125,13 @@ public class WriteFile
      */
     public static void writePurchase(Customer c, Purchase p)
     {
-    	// Date Format 2014-08-22 16:24
-    	DateFormat df = new SimpleDateFormat(FORMAT_DATE);
-    	
 		// filename 2021234567.txt
-		String filename2 = PATH +  c.getPhoneNumber() + ".txt";
+		String filename2 = PATH_CUSTOMER +  c.getPhoneNumber() + ".txt";
 		
 		// open file
     	PrintWriter out = openWriter(filename2); 	
     	
-    	String line = df.format( p.getDate() );
+    	String line = FORMAT_DATE.format( p.getDate() );
         line += DELIMITER + String.format( FORMAT_AMOUNT, p.getAmount() );    
         out.println(line);                          // write it on a line
         

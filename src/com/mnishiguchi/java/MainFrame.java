@@ -77,14 +77,14 @@ public class MainFrame extends JFrame
 		
 	/**
 	 * Helper Method to add  a components to a specified GridBag cell
-	 * @param p             a panel with the GridBagLayout
-	 * @param c             a JComponent item to add
-	 * @param x             the x position of the component
-	 * @param y             the y position of the component
-	 * @param width    number of columns spanned by the component
-	 * @param height    number of rows spanned by the component
-	 * @param align       one of the constants defined by GridBagConstraints class, 
-	 *                                    which indicate where to place the component if it doesn't fill the space.
+	 * @param p			a panel with the GridBagLayout
+	 * @param c			a JComponent item to add
+	 * @param x			the x position of the component
+	 * @param y			the y position of the component
+	 * @param width	number of columns spanned by the component
+	 * @param height	number of rows spanned by the component
+	 * @param align		one of the constants defined by GridBagConstraints class, 
+	 * 								which indicate where to place the component if it doesn't fill the space.
 	 */
 	private void addGridItem(JPanel p, JComponent c, int x, int y, int width, int height, int align)
 	{
@@ -101,9 +101,7 @@ public class MainFrame extends JFrame
 		p.add(c,  gc);
 	}
 		
-	/**
-	 * Inner class to listen for a click on buttons
-	 */
+	/** Inner class to listen for a click on buttons */
 	private class OnButtonClickListener implements ActionListener
 	{
 		@Override
@@ -213,7 +211,7 @@ public class MainFrame extends JFrame
 			// ---------------------- respond to button5 ---------------------- 
 			else if (e.getSource() == button5)
 			{
-				
+				// TODO
 			}
 		}
 	}
