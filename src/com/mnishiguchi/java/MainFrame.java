@@ -69,7 +69,7 @@ public class MainFrame extends JFrame
 	    button2.addActionListener(handle);	    
 		button3.addActionListener(handle);	    
 		button4.addActionListener(handle);
-		button4.addActionListener(handle);	 
+		button5.addActionListener(handle);	 
 		    
 		// add buttons
         addGridItem(panel, button1, 1, 0, 1, 1, GridBagConstraints.WEST);
@@ -118,7 +118,7 @@ public class MainFrame extends JFrame
 			 // ---------------------- respond to button1 ----------------------
 			if (e.getSource() == button1)                      
 			{			    
-				new CreateAcountPrompt();
+				new CreateAcountFrame();
 			}
 			// ---------------------- respond to button2 ----------------------
 			else if (e.getSource() == button2)
@@ -220,6 +220,8 @@ public class MainFrame extends JFrame
 			else if (e.getSource() == button5)
 			{
 				// TODO
+				System.out.println("button5 was clicked");
+				new InvoiceFrame("00000000");	// temporary
 			}
 		}
 	}

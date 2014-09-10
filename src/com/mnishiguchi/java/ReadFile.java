@@ -134,6 +134,11 @@ public class ReadFile
     	return purchaseData; 
     }
     
+    /**
+     * @param invoiceNumber
+     * @return	an Invoice object associated with a specified invoice number; 
+     * null if the invoice creation failed.
+     */
     public static Invoice getInvoice(String invoiceNumber)
     {
     	// create an Invoice object
@@ -156,7 +161,7 @@ public class ReadFile
     	catch (ParseException ex)
     	{
     		System.out.println("Date parse error in ReadFile.getInvoice");
-    		System.exit(0);
+    		return null;
     	}
     	
     	// get purchased articles
@@ -183,7 +188,7 @@ public class ReadFile
         	catch (NumberFormatException ex)
         	{
     	        System.out.println("Number Parse Error in ReadFile.getInvoice");
-    	        System.exit(0);
+    	        return null;
         	}
         }
         // add the ArrayList of purchased articles to the Invoice

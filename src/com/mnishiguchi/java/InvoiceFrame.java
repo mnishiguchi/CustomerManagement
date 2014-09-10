@@ -25,9 +25,9 @@ public class InvoiceFrame extends JFrame
 	
 	// instance variables
 	private JLabel label1, label2;
-    String invoiceNumber; 
     Date purchaseDate;
     Stack<Article> purchasedArticles;
+    double total;
 	
 	// constructor
 	public InvoiceFrame(String invoiceNumber)
@@ -42,13 +42,15 @@ public class InvoiceFrame extends JFrame
 	    // create an Invoice object
         Invoice inv = ReadFile.getInvoice(invoiceNumber);
         
-        // ensure that invoice is not null
-        // TODO
+        if (inv == null)	// ensure that invoice is not null
+        {
+        	
+        }
         
-        // get data from invoice
-        invoiceNumber = invoiceNumber; 
+        // get data from the Invoice object
         purchaseDate = inv.getPurchaseDate();
         purchasedArticles = inv.getPurchasedArticles();
+        total = inv.getAmount();
         
 	    // create a panel with BorderLayout
 	    JPanel panel1 = new JPanel();

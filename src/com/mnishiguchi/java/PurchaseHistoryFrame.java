@@ -140,7 +140,7 @@ public class PurchaseHistoryFrame extends JFrame
 			if (e.getSource() == button1)
 			{
 				 // show a prompt for a new purchase
-				JFrame frame = new AddPurchasePrompt(customer);			
+				JFrame frame = new NewPurchaseFrame(customer);			
 				PurchaseHistoryFrame.this.dispose();    // close this frame	
 			}
 			// ------------------- respond to button2 -------------------------

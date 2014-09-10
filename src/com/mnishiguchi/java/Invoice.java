@@ -11,7 +11,7 @@ public class Invoice
 	// instance variables
 	private String invoiceNumber; 
     private Date purchaseDate;
-    private String amount;
+    private double amount;
     private Stack<Article> purchasedArticles;
 	
 	// constructor
@@ -19,7 +19,7 @@ public class Invoice
     {
     	this.invoiceNumber = invoiceNumber; 
     }
-    public Invoice(String invoiceNumber, Date purchaseDate, String amount, Stack<Article> purchasedArticles)
+    public Invoice(String invoiceNumber, Date purchaseDate, double amount, Stack<Article> purchasedArticles)
     {
     	this.invoiceNumber = invoiceNumber;
     	this.purchaseDate = purchaseDate;
@@ -27,7 +27,7 @@ public class Invoice
     	this.purchasedArticles = purchasedArticles;
     }
     
-    /**  A static method to check if an Invoice object is expired by referencing the constant Invoice.LIFE_SPAN.
+	/**  A static method to check if an Invoice object is expired by referencing the constant Invoice.LIFE_SPAN.
      *  @param purchaseDate			a Date object to represent a purchase date
      *  @return	true if the Invoice object is expired; false otherwise
      */
@@ -67,5 +67,13 @@ public class Invoice
 	public void setPurchasedArticles(Stack<Article> purchasedArticles)
 	{
 		this.purchasedArticles = purchasedArticles;
+	}
+    public double getAmount()
+	{
+		return amount;
+	}
+	public void setAmount(double amount)
+	{
+		this.amount = amount;
 	}
 }
