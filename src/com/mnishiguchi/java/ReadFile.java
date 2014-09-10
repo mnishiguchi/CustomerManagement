@@ -11,16 +11,15 @@ import java.util.Scanner;
 import java.util.Stack;
 
 
-/**
- * This class provides a few static methods to read data from a file
- */
+/**  This class provides a few static methods to read data from a file  */
 public class ReadFile
 {
-	// constants
+	// Static constants
 	public static final String DELIMITER = "\t";
-	public static final String FORMAT_DATE = "yyyy-MM-dd HH:mm" ;  // 2014-08-22 16:24
 	public static final String PATH = "C:customer_data\\"; 
-    
+	public static final DateFormat FORMAT_DATE =
+        new SimpleDateFormat("yyyy-MM-dd HH:mm");  // 2014-08-22 16:24
+	
 	/**
      * Creates a Scanner object to read a specified file.
      * @param     path of the file to be opened
@@ -64,15 +63,17 @@ public class ReadFile
         while ( in.hasNextLine() )
         {
 	    	line = in.nextLine();  // read a line
-	
+	        
+	    	// if a line has data, add to temporary storage
 	    	if ( line.equals("") == false)
-                lines.add(line);    // if a line has data, add to temporary storage
+	    	{
+	    		lines.add(line); 
+	    	}
         }
     	in.close();  // close file
     	
     	// ensure that some customers exist
-    	if ( lines.isEmpty())
-    		return null;
+    	if ( lines.isEmpty() )  return null;
     	
 		//sort the lines
 		Collections.sort(lines);
@@ -114,7 +115,7 @@ public class ReadFile
         double amount = 0.0;
         
     	// Date Format 2014-08-22 16:24
-    	DateFormat df = new SimpleDateFormat(FORMAT_DATE);
+    	//DateFormat df = new SimpleDateFormat(FORMAT_DATE);
     	
     	// open file   // filename 2021234567.txt
     	Scanner in = getScanner( PATH +  c.getPhoneNumber() + ".txt" );
@@ -130,14 +131,14 @@ public class ReadFile
 	    	// ensure that data has exactly two items
 	    	if (data.length != 2)
 	    	{
-	    		System.out.println("Excluded a purchase record that does not have exactly 2 items");
-	    		continue;
+	       		System.out.println("data.length should be 2");
+	       		continue;
 	    	}
-	    		
+
 	    	try
 	    	{
 	    	    // parse date
-	    	    date = (Date) df.parse( data[0] );
+	    	    date = (Date) FORMAT_DATE.parse( data[0] );
 		    	// parse amount
 		    	amount = Double.parseDouble( data[1].replaceAll(",", "") );    // remove commas if any
 		        purchaseData.add( new Purchase(date, amount) ) ;
@@ -153,25 +154,96 @@ public class ReadFile
 	        	continue;
 	    	}
 	    }
-
-    	in.close();  // close file
-    	
+    	in.close();  // close file  	
     	return purchaseData; 
     }
     
     public static Invoice getInvoice(String invoiceNumber)
     {
-    	Invoice inv = null;
+    	// create an Invoice object
+    	Invoice inv = new Invoice(invoiceNumber);
     	
+    	// get data from the invoice file
+    	String filePath = PATH + invoiceNumber + ".txt";
+    	ArrayList<String> lines = getDataFromFile(filePath);
     	
-    	if (Invoice.isExpired(purchaseDate, life_millisec))
+    	String[] data;	// to store processed data temporarily
+    	
+    	// get the purchase date from header and add it to the Invoice object
+    	try
     	{
-    		
+    	    String header = lines.get(0);
+    	    lines.remove(0);  // remove this line from the ArrayList
+    	    Date d = (Date) FORMAT_DATE.parse( header);
+    	    inv.setPurchaseDate(d);
+    	}
+    	catch (ParseException ex1)
+    	{
+    		System.out.println("Date parse error occurred.");
+    		System.exit(0);
+    	}
+    	catch (IllegalArgumentException ex2)
+    	{
+    		System.out.println("Invalid date format string was passed to the SimpleDateFormat constructor.");
+    		System.exit(0);
     	}
     	
-    	// TODO
-    	// TODO
-    	// TODO
+    	// get purchased articles
+    	Stack<Article> purchasedArticles = new Stack<Article>();
+    	String name = "";
+    	double price = 0.0;
+    	int quantity = 0;
+        for (String temp: lines)
+        {
+        	data = temp.split(DELIMITER); 
+        	if (data.length != 3)    // ensure that data has 3items
+        	{
+        		System.out.println("purchasedArticle data should have exactly 3 items");
+        		continue;
+        	}
+        	// process data and add a new Article to the ArrayList
+        	try
+        	{
+            	name = data[0];
+            	price = Double.parseDouble(data[1]);
+            	quantity = Integer.parseInt(data[2]);
+            	purchasedArticles.add( new Article(name, price, quantity) ) ;	
+        	}
+        	catch (NumberFormatException ex)
+        	{
+    	        System.out.println("Number Parse Error");
+    	        continue;
+        	}
+        }
+        // add the ArrayList of purchased articles to the Invoice
+    	inv.setPurchasedArticles(purchasedArticles);
+    			
     	return inv;
+    }
+    
+    /** Reads data from a file
+     * @param	filePath	the path to the file to be read
+     * @return	an ArrayList object with each line of the file as an array element
+     */
+    private static ArrayList<String> getDataFromFile(String filePath)
+    {
+    	// open file
+    	Scanner in = getScanner(filePath);
+    	
+    	String line = "";                                                                      // temporary storage
+    	ArrayList<String> lines = new ArrayList<String>();    // to store raw data
+    	
+        while ( in.hasNextLine() )
+        {
+	    	line = in.nextLine();  // read a line
+	        
+	    	// if a line has data, add to temporary storage
+	    	if ( line.equals("") == false)
+	    	{
+	    		lines.add(line); 
+	    	}
+        }
+    	in.close();  // close file
+    	return lines ;
     }
 }

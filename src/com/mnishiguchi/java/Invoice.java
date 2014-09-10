@@ -1,6 +1,5 @@
 package com.mnishiguchi.java;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Stack;
 

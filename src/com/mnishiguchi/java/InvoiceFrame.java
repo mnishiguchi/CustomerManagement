@@ -1,22 +1,17 @@
 package com.mnishiguchi.java;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -25,8 +20,8 @@ import javax.swing.table.DefaultTableModel;
 public class InvoiceFrame extends JFrame
 {
 	// constant
-	public static final String FORMAT_DATE = "yyyy-MM-dd HH:mm" ;  // 2014-08-22 16:24
 	public static final String FORMAT_AMOUNT = "%.2f";      // 1234.56
+	public static final DateFormat FORMAT_DATE = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
 	// instance variables
 	private JLabel label1, label2;
@@ -71,9 +66,6 @@ public class InvoiceFrame extends JFrame
 	    box1.add( Box.createHorizontalGlue() );  // to separate components as far as possible
 	    box1.add( label2 );
 	    box1.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-	    
-    	// Date Format 2014-08-22 16:24
-    	DateFormat format1 = new SimpleDateFormat(FORMAT_DATE);
     	
     	// create a table model	
       	Object[] tableRow = new Object[4];       // [0]=>article; [1]=>price; [2]=>qty ;[3]=>total
