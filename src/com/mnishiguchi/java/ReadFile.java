@@ -42,7 +42,7 @@ public class ReadFile
     	}
     	catch (IOException e)
     	{
-        	System.out.println("I/O Error, when trying to open a file and create a Scanner object.");
+        	System.out.println("I/O Error in ReadFile.getScanner, when trying to open a file and create a Scanner object.");
         	System.exit(0);
     	}
     	return in;
@@ -71,20 +71,18 @@ public class ReadFile
         for (String temp: lines)
         {
         	data = temp.split(DELIMITER); 
-        	if (data.length == 5)    // ensure that data has 4 items
-        	{
-	    		lastName = data[0];
-	            firstName = data[1];
-	        	phoneNumber = data[2];
-	        	zipCode  = data[3];
-	        	prefix  =  ( data[4].equals("Mr.") ) ?  Customer.Prefix.MR : Customer.Prefix.MS;
-	        	customers.add( new Customer(lastName, firstName, phoneNumber, zipCode, prefix) ) ;	
-        	}
-        	else
-        	{
-        		System.out.println("Customer Format Error: not exactly 5 items");
-        		System.exit(0);
-        	}
+        	if (data.length != 5)    // ensure that data has 4 items
+            {
+            		System.out.println("Invalid Data format in ReadFile.getCustomerList - data.length should be 5");
+            		continue;
+            }
+
+	    	lastName = data[0];
+	        firstName = data[1];
+	        phoneNumber = data[2];
+	        zipCode  = data[3];
+	        prefix  =  ( data[4].equals("Mr.") ) ?  Customer.Prefix.MR : Customer.Prefix.MS;
+	        customers.add( new Customer(lastName, firstName, phoneNumber, zipCode, prefix) ) ;	
         }
     	return customers;
     }
@@ -100,21 +98,18 @@ public class ReadFile
         Date date = null;
         double amount = 0.0;
     	
-    	// open file   // filename 2021234567.txt
-    	Scanner in = getScanner( PATH +  c.getPhoneNumber() + ".txt" );
-    	
-    	String line = "";    // to store raw data
+        // get data from the file 2021234567.txt
+        ArrayList<String> lines = getDataFromFile( PATH +  c.getPhoneNumber() + ".txt" );	// to store raw data
+        
     	String[] data;       // to store processed data
-    	
-        while ( in.hasNextLine() )
+        for ( String line: lines )
         {
-	    	line = in.nextLine();    // scan a line	
 	    	data = line.split(DELIMITER);
 	    	
 	    	// ensure that data has exactly two items
 	    	if (data.length != 2)
 	    	{
-	       		System.out.println("data.length should be 2");
+	       		System.out.println("Invalid Data format in ReadFile.getPurchaseList - data.length should be 2");
 	       		continue;
 	    	}
 
@@ -126,18 +121,17 @@ public class ReadFile
 		    	amount = Double.parseDouble( data[1].replaceAll(",", "") );    // remove commas if any
 		        purchaseData.add( new Purchase(date, amount) ) ;
 	    	}
-	    	catch (ParseException e)
+	    	catch (ParseException ex)
 	    	{
-	       		System.out.println("Date Parse Error");
-	       		continue;
+	       		System.out.println("Date Parse Error in ReadFile.getPurchaseList");
+	       		System.exit(0);
 	    	}
-	    	catch (NumberFormatException e)
+	    	catch (NumberFormatException ex)
 	    	{
-	        	System.out.println("Number Parse Error");
-	        	continue;
+	        	System.out.println("Number Parse Error in ReadFile.getPurchaseList");
+	        	System.exit(0);
 	    	}
 	    }
-    	in.close();  // close file  	
     	return purchaseData; 
     }
     
@@ -160,14 +154,9 @@ public class ReadFile
     	    Date d = (Date) FORMAT_DATE.parse( header);
     	    inv.setPurchaseDate(d);
     	}
-    	catch (ParseException ex1)
+    	catch (ParseException ex)
     	{
-    		System.out.println("Date parse error occurred.");
-    		System.exit(0);
-    	}
-    	catch (IllegalArgumentException ex2)
-    	{
-    		System.out.println("Invalid date format string was passed to the SimpleDateFormat constructor.");
+    		System.out.println("Date parse error in ReadFile.getInvoice");
     		System.exit(0);
     	}
     	
@@ -181,7 +170,7 @@ public class ReadFile
         	data = temp.split(DELIMITER); 
         	if (data.length != 3)    // ensure that data has 3items
         	{
-        		System.out.println("purchasedArticle data should have exactly 3 items");
+        		System.out.println("Invalid Data format in ReadFile.getInvoice - data.length should be 3");
         		continue;
         	}
         	// process data and add a new Article to the ArrayList
@@ -194,8 +183,8 @@ public class ReadFile
         	}
         	catch (NumberFormatException ex)
         	{
-    	        System.out.println("Number Parse Error");
-    	        continue;
+    	        System.out.println("Number Parse Error in ReadFile.getInvoice");
+    	        System.exit(0);
         	}
         }
         // add the ArrayList of purchased articles to the Invoice
