@@ -11,10 +11,13 @@ public class AddPurchasePrompt extends JFrame
 	// instance variables
 	private JButton button1;
 	private JTextField purchaseInput;
+	private Customer customer;
 	
 	// constructor
-	public AddPurchasePrompt()
+	public AddPurchasePrompt(Customer c)
 	{
+		this.customer = c;
+		
 		// configuration of the frame
 		this.setSize(400, 100);
 		this.setResizable(false);
@@ -82,7 +85,7 @@ public class AddPurchasePrompt extends JFrame
 					try
 					{
 						Purchase p = new Purchase( new Date(), Double.parseDouble(amount) );
-						WriteFile.writePurchase(MainFrame.currentCustomer, p);
+						WriteFile.writePurchase(customer, p);
 					}
 					catch (NumberFormatException e)
 					{
@@ -91,7 +94,7 @@ public class AddPurchasePrompt extends JFrame
 								"Number Parse Error", JOptionPane.ERROR_MESSAGE);
 					}
 					// show a new purchase history
-					JFrame frame = new PurchaseHistoryFrame(MainFrame.currentCustomer);  
+					JFrame frame = new PurchaseHistoryFrame(customer);  
 					
 					AddPurchasePrompt.this.dispose();    // hide this frame	
 				}

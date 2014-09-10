@@ -173,7 +173,7 @@ public class CreateAcountPrompt  extends JFrame
 					else
 					{
 						// remember this customer as current customer
-						MainFrame.currentCustomer = customer;				
+						//MainFrame.currentCustomer = customer;				
 								
 						// append this customer to customer.txt
 						WriteFile.writeCustomer(customer);

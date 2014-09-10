@@ -29,10 +29,13 @@ public class PurchaseHistoryFrame extends JFrame
 	private JLabel label1;
 	private JButton button1;
 	private JTextArea textArea1;
+	private Customer customer;
 	
 	// constructor
 	public PurchaseHistoryFrame(Customer c)
 	{
+		this.customer = c;
+		
 		// configuration of the frame
 		this.setSize(400, 250);
 		this.setResizable(false);
@@ -126,9 +129,8 @@ public class PurchaseHistoryFrame extends JFrame
 			if (e.getSource() == button1)                       // respond to button1
 			{
 				 // show a prompt for a new purchase
-				JFrame frame = new AddPurchasePrompt();
-				
-				PurchaseHistoryFrame.this.dispose();    // hide this frame	
+				JFrame frame = new AddPurchasePrompt(customer);			
+				PurchaseHistoryFrame.this.dispose();    // close this frame	
 			}
 		}
 	}
