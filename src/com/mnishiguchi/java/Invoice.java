@@ -9,14 +9,14 @@ public class Invoice
     private String invoiceNumber; 
     private Date purchaseDate;
     private String amount;
-    private Stack<PurchasedArticle> purchasedArticles;
+    private Stack<Article> purchasedArticles;
 	
 	// constructor
     public Invoice(String invoiceNumber)
     {
     	this.invoiceNumber = invoiceNumber; 
     }
-    public Invoice(String invoiceNumber, Date purchaseDate, String amount, Stack<PurchasedArticle> purchasedArticles)
+    public Invoice(String invoiceNumber, Date purchaseDate, String amount, Stack<Article> purchasedArticles)
     {
     	this.invoiceNumber = invoiceNumber;
     	this.purchaseDate = purchaseDate;
@@ -58,11 +58,11 @@ public class Invoice
 	{
 		this.purchaseDate = purchaseDate;
 	}
-	public Stack<PurchasedArticle> getPurchasedArticles()
+	public Stack<Article> getPurchasedArticles()
 	{
 		return purchasedArticles;
 	}
-	public void setPurchasedArticles(Stack<PurchasedArticle> purchasedArticles)
+	public void setPurchasedArticles(Stack<Article> purchasedArticles)
 	{
 		this.purchasedArticles = purchasedArticles;
 	}

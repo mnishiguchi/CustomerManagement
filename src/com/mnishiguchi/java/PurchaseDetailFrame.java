@@ -32,7 +32,7 @@ public class PurchaseDetailFrame extends JFrame
 	private JLabel label1, label2;
     String invoiceNumber; 
     Date purchaseDate;
-    Stack<PurchasedArticle> purchasedArticles;
+    Stack<Article> purchasedArticles;
 	
 	// constructor
 	public PurchaseDetailFrame(String invoiceNumber)
@@ -91,7 +91,7 @@ public class PurchaseDetailFrame extends JFrame
     	}
     	else
     	{
-    		PurchasedArticle record;    // temporary storage for each purchase record
+    		Article record;    // temporary storage for each purchase record
 	    	while (purchasedArticles.isEmpty() == false)
 		    {
 		    	// pop a record
