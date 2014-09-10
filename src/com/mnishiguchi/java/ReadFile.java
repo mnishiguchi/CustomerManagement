@@ -162,6 +162,13 @@ public class ReadFile
     public static Invoice getInvoice(String invoiceNumber)
     {
     	Invoice inv = null;
+    	
+    	
+    	if (Invoice.isExpired(purchaseDate, life_millisec))
+    	{
+    		
+    	}
+    	
     	// TODO
     	// TODO
     	// TODO

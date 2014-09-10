@@ -6,7 +6,11 @@ import java.util.Stack;
 
 public class Invoice
 {
-    private String invoiceNumber; 
+    // static constants
+	public static final long LIFE_SPAN = 31556952000L;
+	
+	// instance variables
+	private String invoiceNumber; 
     private Date purchaseDate;
     private String amount;
     private Stack<Article> purchasedArticles;
@@ -24,12 +28,11 @@ public class Invoice
     	this.purchasedArticles = purchasedArticles;
     }
     
-    /**  A static method to check if an Invoice object is expired.
+    /**  A static method to check if an Invoice object is expired by referencing the constant Invoice.LIFE_SPAN.
      *  @param purchaseDate			a Date object to represent a purchase date
-     *  @param millisec						a life span in milliseconds
      *  @return	true if the Invoice object is expired; false otherwise
      */
-    public static boolean isExpired(Date purchaseDate, long life_millisec)
+    public static boolean isExpired(Date purchaseDate)
 	{
         // get purchaseDate in milliseconds		
 		long purchaseDate_millisec = purchaseDate.getTime();
@@ -38,7 +41,7 @@ public class Invoice
 		Date t = new Date();
 		long today_millisec = t.getTime();
 		
-    	return (today_millisec - purchaseDate_millisec) < life_millisec;
+    	return (today_millisec - purchaseDate_millisec) < LIFE_SPAN;
 	}
     
     // accessor methods
