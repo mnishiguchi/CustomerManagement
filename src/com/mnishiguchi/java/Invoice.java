@@ -3,10 +3,11 @@ package com.mnishiguchi.java;
 import java.util.Date;
 import java.util.Stack;
 
+/** Shows an invoice associated with a specified invoice number */
 public class Invoice
 {
     // static constants
-	public static final long LIFE_SPAN = 31556952000L;
+	public static final long LIFE_SPAN = 31556952000L;	// one year
 	
 	// instance variables
 	private String invoiceNumber; 
