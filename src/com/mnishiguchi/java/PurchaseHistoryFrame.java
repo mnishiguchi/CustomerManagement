@@ -28,13 +28,10 @@ public class PurchaseHistoryFrame extends JFrame
 	// instance variables
 	private JLabel label1;
 	private JButton button1, button2;
-	private Customer customer;
 	
 	// constructor
 	public PurchaseHistoryFrame(Customer c)
 	{
-		this.customer = c;
-		
 		// configuration of the frame
 		this.setSize(400, 250);
 		this.setResizable(false);
@@ -140,7 +137,7 @@ public class PurchaseHistoryFrame extends JFrame
 			if (e.getSource() == button1)
 			{
 				 // show a prompt for a new purchase
-				JFrame frame = new NewPurchaseFrame(customer);			
+				new NewPurchaseFrame();			
 				PurchaseHistoryFrame.this.dispose();    // close this frame	
 			}
 			// ------------------- respond to button2 -------------------------

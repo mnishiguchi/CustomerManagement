@@ -18,13 +18,10 @@ public class NewPurchaseFrame extends JFrame
 	private JTextField priceField;
 	private JSpinner qtySpinner;
 	private JButton button1;
-	private Customer customer;
     
 	// constructor
-	public NewPurchaseFrame(Customer c)
-	{
-		this.customer = c;
-		
+	public NewPurchaseFrame()
+	{		
 		// configuration of the frame
 		this.setSize(400, 250);
 		this.setResizable(false);

@@ -27,6 +27,9 @@ public class MainFrame extends JFrame
 	public static final DateFormat FORMAT_DATE =
         new SimpleDateFormat("yyyy-MM-dd HH:mm");  // 2014-08-22 16:24
 	
+	// global reference
+	public static String invoiceNumber = "";
+	
     // instance variables
 	private JButton button1,  button2, button3, button4, button5;
 	
@@ -221,7 +224,7 @@ public class MainFrame extends JFrame
 			{
 				// TODO
 				System.out.println("button5 was clicked");
-				new InvoiceFrame("00000000");	// temporary
+				new NewInvoiceFrame();	// temporary
 			}
 		}
 	}
