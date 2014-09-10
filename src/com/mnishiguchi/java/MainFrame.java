@@ -20,7 +20,7 @@ public class MainFrame extends JFrame
 	public static Customer currentCustomer;  // remember customer
 	
     // instance variables
-	private JButton button1,  button2, button3, button4;
+	private JButton button1,  button2, button3, button4, button5;
 	
 	public static void main(String[] args)   // program starts from here
 	{
@@ -46,25 +46,29 @@ public class MainFrame extends JFrame
 	    addGridItem(panel, new JLabel("Show All Accounts : "), 0, 1, 1, 1, GridBagConstraints.EAST);
 	    addGridItem(panel, new JLabel("Search By Phone Number : "), 0, 2, 1, 1, GridBagConstraints.EAST);
 	    addGridItem(panel, new JLabel("Search By Last Name : "), 0, 3, 1, 1, GridBagConstraints.EAST);
+	    addGridItem(panel, new JLabel("Search By Invoice Number : "), 0, 4, 1, 1, GridBagConstraints.EAST);
 		    
 	    // create buttons
 	    button1 = new JButton("OK");
 		button2 = new JButton("OK");
 	    button3 = new JButton("OK");
 	    button4 = new JButton("OK");
+	    button5 = new JButton("OK");
 		    
 	    // set an event handler on buttons
 	    OnButtonClickListener handle = new OnButtonClickListener();
 	    button1.addActionListener(handle);
 	    button2.addActionListener(handle);	    
 		button3.addActionListener(handle);	    
-		button4.addActionListener(handle);	    
+		button4.addActionListener(handle);
+		button4.addActionListener(handle);	 
 		    
 		// add buttons
         addGridItem(panel, button1, 1, 0, 1, 1, GridBagConstraints.WEST);
 	    addGridItem(panel, button2, 1, 1, 1, 1, GridBagConstraints.WEST);
 	    addGridItem(panel, button3, 1, 2, 1, 1, GridBagConstraints.WEST);
 		addGridItem(panel, button4, 1, 3, 1, 1, GridBagConstraints.WEST);
+		addGridItem(panel, button5, 1, 4, 1, 1, GridBagConstraints.WEST);
 
 	    this.add(panel);    // add panel to the frame
 		    
@@ -105,12 +109,12 @@ public class MainFrame extends JFrame
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			 /* ==== respond to button1 ==== */
+			 // ---------------------- respond to button1 ----------------------
 			if (e.getSource() == button1)                      
 			{			    
 				new CreateAcountPrompt();
 			}
-			/* ==== respond to button2 ==== */
+			// ---------------------- respond to button2 ----------------------
 			else if (e.getSource() == button2)
 			{
 			    // read all the customers from customers.txt
@@ -128,7 +132,7 @@ public class MainFrame extends JFrame
 					new AccountListFrame( customerList );						
 			    }
 			}
-			/* ==== respond to button3 ==== */
+			// ---------------------- respond to button3 ----------------------
 			else if (e.getSource() == button3)
 			{			
 				String phoneNumber;
@@ -166,7 +170,7 @@ public class MainFrame extends JFrame
 					new  AccountListFrame( result );    // show search result
 				}
 			}
-			/* ==== respond to button4 ==== */
+			// ---------------------- respond to button4 ----------------------
 			else if (e.getSource() == button4)
 			{
 				//new SearchByLastNamePrompt();
@@ -205,6 +209,11 @@ public class MainFrame extends JFrame
 				{
 					new  AccountListFrame( result );    // show search result
 				}
+			}
+			// ---------------------- respond to button5 ---------------------- 
+			else if (e.getSource() == button5)
+			{
+				
 			}
 		}
 	}
