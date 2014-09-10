@@ -144,12 +144,8 @@ public class AccountListFrame extends JFrame
 					}
 					else
 					{
-						// remember this customer as a current customer
-						MainFrame.currentCustomer = customers.get(selectedIndex);
-						
-						// show purchase data of this customer
-						new PurchaseHistoryFrame(MainFrame.currentCustomer);
-						
+					    // show purchase data of this selected customer
+						new PurchaseHistoryFrame( customers.get(selectedIndex) );						
 						AccountListFrame.this.dispose();     // close this frame
 					}
 				}

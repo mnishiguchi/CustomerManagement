@@ -3,7 +3,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
@@ -23,8 +22,8 @@ import javax.swing.table.DefaultTableModel;
 public class PurchaseHistoryFrame extends JFrame
 {
 	// constant
-	public static final String FORMAT_DATE = "yyyy-MM-dd HH:mm" ;  // 2014-08-22 16:24
-	public static final String FORMAT_AMOUNT = "%.2f";      // 1234.56
+	private static final String FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
+	private static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
 	// instance variables
 	private JLabel label1;
@@ -67,9 +66,6 @@ public class PurchaseHistoryFrame extends JFrame
 	    box1.add( Box.createHorizontalGlue() );  // to separate components as far as possible
 	    box1.add( button1 );
 	    box1.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
-	    
-    	// Date Format 2014-08-22 16:24
-    	DateFormat format1 = new SimpleDateFormat(FORMAT_DATE);
     	
     	// create a table model	
       	Object[] tableRow = new Object[2];       // [0]=>date; [1]=>amount
@@ -92,7 +88,7 @@ public class PurchaseHistoryFrame extends JFrame
 		    	record = purchaseList.pop();
 		    	
 		    	// append to the tableRows array
-		    	tableRow[0] = format1.format( record.getDate() ) ;
+		    	tableRow[0] = FORMAT_DATE.format( record.getDate() ) ;
 		    	tableRow[1] =  String.format( FORMAT_AMOUNT, record.getAmount() );
 		    	tableModel.addRow(tableRow);
 		    }

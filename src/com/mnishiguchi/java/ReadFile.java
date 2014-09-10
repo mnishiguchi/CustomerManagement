@@ -15,11 +15,11 @@ import java.util.Stack;
 public class ReadFile
 {
 	// Static constants
-	public static final String DELIMITER = "\t";
-	public static final String PATH_CUSTOMER = "C:customer_data\\";
-	public static final String PATH_INVOICE = "C:invoice\\";
-	public static final DateFormat FORMAT_DATE =
-        new SimpleDateFormat("yyyy-MM-dd HH:mm");  // 2014-08-22 16:24
+	private static final String DELIMITER = MainFrame.DELIMITER;
+	private static final String PATH_CUSTOMER = MainFrame.PATH_CUSTOMER;
+	private static final String PATH_INVOICE = MainFrame.PATH_INVOICE;
+	private static final String FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
+	private static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
 	/**
      * Creates a Scanner object to read a specified file.

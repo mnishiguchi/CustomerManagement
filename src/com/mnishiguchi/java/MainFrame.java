@@ -4,7 +4,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -16,8 +19,13 @@ import javax.swing.JPanel;
 /** A frame for the main menu. */
 public class MainFrame extends JFrame
 {
-	// class variables
-	public static Customer currentCustomer;  // remember customer
+	// Global constants
+    public static final String DELIMITER = "\t";
+	public static final String PATH_CUSTOMER = "C:customer_data\\";
+	public static final String PATH_INVOICE = "C:invoice\\";
+	public static final String FORMAT_AMOUNT = "%.2f";      // 1234.56
+	public static final DateFormat FORMAT_DATE =
+        new SimpleDateFormat("yyyy-MM-dd HH:mm");  // 2014-08-22 16:24
 	
     // instance variables
 	private JButton button1,  button2, button3, button4, button5;
