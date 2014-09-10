@@ -37,8 +37,6 @@ public class AddPurchasePrompt extends JFrame
 	    
 		// create a button
 	    button1 = new JButton("OK");
-	    
-	    // set an event handler
 	    OnButtonClickListener handle = new OnButtonClickListener();
 	    button1.addActionListener(handle);
 	    
@@ -52,8 +50,7 @@ public class AddPurchasePrompt extends JFrame
 	    this.setVisible(true);	    
 	}
 	
-	/**
-	 * Inner class to listen for a click on button1
+	/** Inner class to listen for a click on button1.
 	 * Searches for a customer purchase data based on last name that the user inputed
 	 * If user input is empty, re-prompts the user.
 	 */
@@ -94,9 +91,9 @@ public class AddPurchasePrompt extends JFrame
 								"Number Parse Error", JOptionPane.ERROR_MESSAGE);
 					}
 					// show a new purchase history
-					JFrame frame = new PurchaseHistoryFrame(customer);  
+					new PurchaseHistoryFrame(customer);  
 					
-					AddPurchasePrompt.this.dispose();    // hide this frame	
+					AddPurchasePrompt.this.dispose();    // close this frame	
 				}
 				// move the focus back to the text field
 				purchaseInput.requestFocus();

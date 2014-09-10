@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -90,12 +91,16 @@ public class AccountListFrame extends JFrame
 	    this.add(scroll, BorderLayout.CENTER);
 	    
 	    // create buttons with an event handler
-	    button1 = new JButton("Show Purchase History");
+	    button1 = new JButton("     Show Purchase History     ");
 	    OnButtonClickListener handle = new OnButtonClickListener();
 	    button1.addActionListener(handle);
 	    
+	    // create a panel and add button to it
+	    JPanel panel = new JPanel();
+	    panel.add( button1 );
+	    
 	    // add button1 to the frame
-	    this.add(button1, BorderLayout.SOUTH);
+	    this.add(panel, BorderLayout.SOUTH);
 	    
 	    this.setVisible(true);    // show this frame
 	}

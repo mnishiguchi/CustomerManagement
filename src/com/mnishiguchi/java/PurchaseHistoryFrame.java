@@ -27,8 +27,7 @@ public class PurchaseHistoryFrame extends JFrame
 	
 	// instance variables
 	private JLabel label1;
-	private JButton button1;
-	private JTextArea textArea1;
+	private JButton button1, button2;
 	private Customer customer;
 	
 	// constructor
@@ -114,6 +113,17 @@ public class PurchaseHistoryFrame extends JFrame
 	    this.add(box1, BorderLayout.NORTH);    // box with label & button
 	    this.add(scroll);                                                // table component with text area
 	    
+	    // create buttons with an event handler
+	    button2 = new JButton("               Show Invoice               ");
+	    button2.addActionListener(handle);	// reuse event handler
+	    
+	    // create a panel and add button to it
+	    JPanel panel = new JPanel();
+	    panel.add( button2 );
+	    
+	    // add button2 to the frame
+	    this.add(panel, BorderLayout.SOUTH);
+	    
 	    // now frame is ready to be displayed
 	    this.setVisible(true);
 	}
@@ -126,11 +136,17 @@ public class PurchaseHistoryFrame extends JFrame
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			if (e.getSource() == button1)                       // respond to button1
+			// ------------------- respond to button1 -------------------------
+			if (e.getSource() == button1)
 			{
 				 // show a prompt for a new purchase
 				JFrame frame = new AddPurchasePrompt(customer);			
 				PurchaseHistoryFrame.this.dispose();    // close this frame	
+			}
+			// ------------------- respond to button2 -------------------------
+			else if (e.getSource() == button2)
+			{
+				 // TODO
 			}
 		}
 	}
