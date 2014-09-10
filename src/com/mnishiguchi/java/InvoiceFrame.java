@@ -20,8 +20,8 @@ import javax.swing.table.DefaultTableModel;
 public class InvoiceFrame extends JFrame
 {
 	// constant
-	public static final String FORMAT_AMOUNT = "%.2f";      // 1234.56
-	public static final DateFormat FORMAT_DATE = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+	public static final String FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
+	public static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
 	// instance variables
 	private JLabel label1, label2;

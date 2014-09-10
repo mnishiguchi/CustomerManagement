@@ -19,7 +19,7 @@ public class NewPurchaseFrame extends JFrame
 	private JSpinner qtySpinner;
 	private JButton button1;
 	private Customer customer;
-	
+    
 	// constructor
 	public NewPurchaseFrame(Customer c)
 	{
@@ -38,6 +38,7 @@ public class NewPurchaseFrame extends JFrame
 	    // ----------- create a panel with radioButtons --------------------------
 	    JPanel radioPanel = new JPanel();
 	    radioPanel.setLayout( new GridBagLayout() );
+	    radioPanel.setBorder( BorderFactory.createTitledBorder("Articles") );
 	    
 	    // create radio buttons
 	    ButtonGroup group = new ButtonGroup();
@@ -130,53 +131,61 @@ public class NewPurchaseFrame extends JFrame
 	 */
 	private class OnButtonClickListener implements ActionListener
 	{
+		// ingredients of an Article object
+		private String name;
+	    private double price;
+	    private int quantity;
+		
 		@Override
 		public void actionPerformed(ActionEvent event)
 		{
 			if (event.getSource() == button1)
 			{
-				// TODO
-			}
-				/**********************
-				 // get a purchase amount from user input
-				//String amount = purchaseInput.getText();
-				
-				// ensure text field is not empty
-				if (amount.length() == 0)
+				// ------------------ validate price field --------------------			
+				String amount = priceField.getText();	// get a price from user input
+			
+				if ( amount.equals("") )	// ensure text field is not empty
 				{
 					JOptionPane.showMessageDialog( NewPurchaseFrame.this, 
 							"You did not enter anything!", "Message", JOptionPane.INFORMATION_MESSAGE);
+					return;	// quit this procedure right now
 				}
 				else if ( StringChecker.isFloat(amount) == false )
 				{
-					JOptionPane.showMessageDialog( NewPurchaseFrame.this,
+					JOptionPane.showMessageDialog( NewPurchaseFrame.this, 
                             "Invalid Dollar Amount  (Example : 123.45)", 
                             "Message", JOptionPane.INFORMATION_MESSAGE);
+					return;	// quit this procedure right now
 				}
-				else
+				// ------------------ process data ----------------------------			
+				try
 				{
-					// add this purchase to this customer's purchase data file
-					try
-					{
-						Purchase p = new Purchase( new Date(), Double.parseDouble(amount) );
-						WriteFile.writePurchase(customer, p);
-					}
-					catch (NumberFormatException e)
-					{
-						JOptionPane.showMessageDialog(NewPurchaseFrame.this,
-								"Could not read a purchase amount due to invalid format.", 
-								"Number Parse Error", JOptionPane.ERROR_MESSAGE);
-					}
-					// show a new purchase history
-					new PurchaseHistoryFrame(customer);  
+					// get selected article
+				    for (JRadioButton rb : radioButtons)
+				    {
+				    	if ( rb.isSelected() )
+				    	{
+				    		name = rb.getText();
+				    	}
+				    }
+				    
+					// get price
+					price =Double.parseDouble( amount );
 					
-					NewPurchaseFrame.this.dispose();    // close this frame	
+					// get quantity
+				    quantity = (int) qtySpinner.getValue();
 				}
-				// move the focus back to the text field
-				purchaseInput.requestFocus();
-			}
-		}
-		**********************/
+				catch (NumberFormatException ex)
+				{
+					System.out.println("Number Parse Error in NewPurchaseFrame.");
+					System.exit(0);
+				}
+				// create an Article object and add to the ArrayList
+				NewInvoiceFrame.purchasedArticles.add( new Article (name, price, quantity) );
+				
+				new NewInvoiceFrame();	// show a new invoice's draft
+				NewPurchaseFrame.this.dispose();    // close this frame	
+			}				
 		}
 	}
 }
