@@ -87,8 +87,7 @@ public class ReadFile
     	return customers;
     }
     
-    /**
-     * Reads the purchase data of a specified customer from a file
+    /** Reads the purchase data of a specified customer from a file
      * @param c   a Customer object to represent this customer
      * @return      an ArrayList of this customer's purchase data, null if data is empty
      */
