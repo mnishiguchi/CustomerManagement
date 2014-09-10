@@ -16,7 +16,8 @@ public class ReadFile
 {
 	// Static constants
 	public static final String DELIMITER = "\t";
-	public static final String PATH = "C:customer_data\\"; 
+	public static final String PATH = "C:customer_data\\";
+	public static final String PATH_INVOICE = "C:invoice\\";
 	public static final DateFormat FORMAT_DATE =
         new SimpleDateFormat("yyyy-MM-dd HH:mm");  // 2014-08-22 16:24
 	
@@ -53,24 +54,9 @@ public class ReadFile
      */
     public static ArrayList<Customer> getCustomerList()
     {
-    	// open file
-    	Scanner in = getScanner( PATH + "customers.txt" );
-    	
-    	String line = "";                                                                      // temporary storage
-    	ArrayList<String> lines = new ArrayList<String>();    // to store raw data
-    	String[] data;                                                                         // to store processed data
-    	
-        while ( in.hasNextLine() )
-        {
-	    	line = in.nextLine();  // read a line
-	        
-	    	// if a line has data, add to temporary storage
-	    	if ( line.equals("") == false)
-	    	{
-	    		lines.add(line); 
-	    	}
-        }
-    	in.close();  // close file
+    	// get data from the file "customers.txt"
+    	ArrayList<String> lines = getDataFromFile(PATH + "customers.txt");	// to store raw data
+    	String[] data;	// to store processed data
     	
     	// ensure that some customers exist
     	if ( lines.isEmpty() )  return null;
@@ -113,9 +99,6 @@ public class ReadFile
         Stack<Purchase> purchaseData = new Stack<Purchase>();
         Date date = null;
         double amount = 0.0;
-        
-    	// Date Format 2014-08-22 16:24
-    	//DateFormat df = new SimpleDateFormat(FORMAT_DATE);
     	
     	// open file   // filename 2021234567.txt
     	Scanner in = getScanner( PATH +  c.getPhoneNumber() + ".txt" );
@@ -164,7 +147,7 @@ public class ReadFile
     	Invoice inv = new Invoice(invoiceNumber);
     	
     	// get data from the invoice file
-    	String filePath = PATH + invoiceNumber + ".txt";
+    	String filePath = PATH_INVOICE + invoiceNumber + ".txt";
     	ArrayList<String> lines = getDataFromFile(filePath);
     	
     	String[] data;	// to store processed data temporarily
