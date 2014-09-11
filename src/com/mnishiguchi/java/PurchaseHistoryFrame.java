@@ -68,8 +68,8 @@ public class PurchaseHistoryFrame extends JFrame
 		box1.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 		
 		// create a table model	
-		Object[] tableRow = new Object[2];       // [0]=>date; [1]=>amount
-		Object[] tableHead = {"Date", "Amount(US$)"};
+		Object[] tableRow = new Object[3];       // [0]=>date; [1]=>amount; [2]=>invoiceNumber
+		Object[] tableHead = {"Date", "Amount(US$)", "Invoice#"};
 		DefaultTableModel tableModel = new DefaultTableModel(tableHead, 0);    // initially no row
 		
 		// ensure that purchaseList is not null
@@ -77,6 +77,7 @@ public class PurchaseHistoryFrame extends JFrame
 		{
 			tableRow[0] = "(no data)";
 			tableRow[1] = "(no data)";
+			tableRow[2] = "(no data)";
 			tableModel.addRow(tableRow);
 		}
 		else
@@ -84,15 +85,16 @@ public class PurchaseHistoryFrame extends JFrame
 		Purchase record;    // temporary storage for each purchase record
 		while (purchaseList.isEmpty() == false)
 			{
-					// pop a record
-					record = purchaseList.pop();
+				// pop a record
+				record = purchaseList.pop();
 				
 				// append to the tableRows array
 				tableRow[0] = FORMAT_DATE.format( record.getDate() ) ;
 				tableRow[1] =  String.format( FORMAT_AMOUNT, record.getAmount() );
+				tableRow[2] = record.getInvoiceNumber();
 				tableModel.addRow(tableRow);
 			}
-		}	
+		}
 		// create a table
 		JTable table = new JTable(tableModel);
 		

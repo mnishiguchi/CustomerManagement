@@ -20,6 +20,7 @@ public class Purchase
     public Purchase(Date date, double amount, String invoiceNumber)
     {
     	this.date = date;
+    	this.amount = amount;
     	this.invoiceNumber = invoiceNumber;
     }
 	
