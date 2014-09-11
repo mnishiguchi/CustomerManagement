@@ -36,10 +36,9 @@ public class NewInvoiceFrame extends JFrame
 	
 	// ingredients for creating an invoice
 	public static String invoiceNumber = "";    // get in this frame
-	public static Date purchaseDate = new Date();    // get today's date
+	public static Date purchaseDate = new Date();    // get the time now
 	public static double amount = 0.0;    // sum up Articles's subTolals
-	public static Stack<Article> purchasedArticles = new Stack<Article>();
-	// data sent from NewPurchaseFrame
+	public static Stack<Article> purchasedArticles = new Stack<Article>();    // data sent from NewPurchaseFrame
 	
 	// Components
 	private JLabel label1;

@@ -1,10 +1,12 @@
 package com.mnishiguchi.java;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -29,54 +31,59 @@ public class CreateAcountFrame  extends JFrame
 		// configuration of the frame
 		this.setSize(400, 250);
 		this.setResizable(false);
-	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	    this.setTitle("Create A New Acount");
-	    this.setLocationRelativeTo(null);  // put it at the center of the screen
-	    
-	    // create a panel with the GridBagLayout
-	    JPanel panel = new JPanel();
-	    panel.setLayout( new GridBagLayout() );
-	    
-	    // add button names to the panel
-	    addGridItem(panel, new JLabel("Last Name: "), 0, 0, 1, 1, GridBagConstraints.EAST);
-	    addGridItem(panel, new JLabel("First Name : "), 0, 1, 1, 1, GridBagConstraints.EAST);
-	    addGridItem(panel, new JLabel("Phone Number: "), 0, 2, 1, 1, GridBagConstraints.EAST);
-	    addGridItem(panel, new JLabel("Zip Code: "), 0, 3, 1, 1, GridBagConstraints.EAST);
-	    
-	    // create text fields
-	    textField1 = new JTextField(16);
-	    textField2 = new JTextField(16);
-	    textField3 = new JTextField(16);
-	    textField4 = new JTextField(16);
-	    
-	    // add text fields to the panel
-	    addGridItem(panel, textField1, 1, 0, 1, 1, GridBagConstraints.WEST);
-	    addGridItem(panel, textField2, 1, 1, 1, 1, GridBagConstraints.WEST);
-	    addGridItem(panel, textField3, 1, 2, 1, 1, GridBagConstraints.WEST);
-	    addGridItem(panel, textField4, 1, 3, 1, 1, GridBagConstraints.WEST);
-	    
-	    // create radio buttons
-	    ButtonGroup prefix = new ButtonGroup();
-	    radioMr = new JRadioButton("Mr.");
-	    radioMr.setSelected(true);  // selected by default
-	    radioMs = new JRadioButton("Ms.");
-	    prefix.add(radioMr);
-	    prefix.add(radioMs);
-	    
-	    // add radio buttons to the panel
-	    addGridItem(panel, radioMr, 0, 4, 1, 1, GridBagConstraints.EAST);
-	    addGridItem(panel, radioMs, 1, 4, 1, 1, GridBagConstraints.WEST);	    
-	    
-	    // create button with event handler
-	    button1 = new JButton("OK");
-	    OnButtonClickListener handle = new OnButtonClickListener();
-	    button1.addActionListener(handle);
-	    
-	    // add button to the panel
-	    addGridItem(panel, button1, 1, 5, 1, 1, GridBagConstraints.WEST);
-	   
-	    this.add(panel);             // add panel to the frame	    
-	    this.setVisible(true);    // show this frame
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setTitle("Create A New Acount");
+		this.setLocationRelativeTo(null);  // put it at the center of the screen
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBorder( BorderFactory.createLoweredBevelBorder() );
+		
+		// create a panel with the GridBagLayout
+		JPanel panel = new JPanel();
+		panel.setLayout( new GridBagLayout() );
+		panel.setBorder( BorderFactory.createEmptyBorder(9,9,9,9) );
+		
+		// add button names to the panel
+		addGridItem(panel, new JLabel("Last Name: "), 0, 0, 1, 1, GridBagConstraints.EAST);
+		addGridItem(panel, new JLabel("First Name : "), 0, 1, 1, 1, GridBagConstraints.EAST);
+		addGridItem(panel, new JLabel("Phone Number: "), 0, 2, 1, 1, GridBagConstraints.EAST);
+		addGridItem(panel, new JLabel("Zip Code: "), 0, 3, 1, 1, GridBagConstraints.EAST);
+		
+		// create text fields
+		textField1 = new JTextField(16);
+		textField2 = new JTextField(16);
+		textField3 = new JTextField(16);
+		textField4 = new JTextField(16);
+		
+		// add text fields to the panel
+		addGridItem(panel, textField1, 1, 0, 1, 1, GridBagConstraints.WEST);
+		addGridItem(panel, textField2, 1, 1, 1, 1, GridBagConstraints.WEST);
+		addGridItem(panel, textField3, 1, 2, 1, 1, GridBagConstraints.WEST);
+		addGridItem(panel, textField4, 1, 3, 1, 1, GridBagConstraints.WEST);
+		
+		// create radio buttons
+		ButtonGroup prefix = new ButtonGroup();
+		radioMr = new JRadioButton("Mr.");
+		radioMr.setSelected(true);  // selected by default
+		radioMs = new JRadioButton("Ms.");
+		prefix.add(radioMr);
+		prefix.add(radioMs);
+		
+		// add radio buttons to the panel
+		addGridItem(panel, radioMr, 0, 4, 1, 1, GridBagConstraints.EAST);
+		addGridItem(panel, radioMs, 1, 4, 1, 1, GridBagConstraints.WEST);	    
+		
+		// create button with event handler
+		button1 = new JButton("OK");
+		OnButtonClickListener handle = new OnButtonClickListener();
+		button1.addActionListener(handle);
+		
+		// add button to the panel
+		addGridItem(panel, button1, 1, 5, 1, 1, GridBagConstraints.WEST);
+		
+		mainPanel.add(panel);             // add panel to the frame	
+		this.add(mainPanel);
+		this.setVisible(true);    // show this frame
 	}
 	
 	/**
