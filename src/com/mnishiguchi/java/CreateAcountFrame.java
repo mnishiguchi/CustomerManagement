@@ -166,20 +166,23 @@ public class CreateAcountFrame  extends JFrame
 								"This customer exists in your customer list!", "Message", 
 								JOptionPane.INFORMATION_MESSAGE);
 						
+						// remember this customer
+						MainFrame.selectedCustomer = customer;
+						
 						// show this customer's purchase history
-						new PurchaseHistoryFrame(customer);						
+						new PurchaseHistoryFrame();
 						CreateAcountFrame.this.dispose();    // close this frame	
 					}
 					else
 					{
-						// remember this customer as current customer
-						//MainFrame.currentCustomer = customer;				
-								
 						// append this customer to customer.txt
 						WriteFile.writeCustomer(customer);
 						
+						// remember this customer
+						MainFrame.selectedCustomer = customer;
+						
 						// show this customer's purchase history
-						new PurchaseHistoryFrame(customer);						
+						new PurchaseHistoryFrame();
 						CreateAcountFrame.this.dispose();    // close this frame	
 					}
 				}

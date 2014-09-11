@@ -28,9 +28,10 @@ public class PurchaseHistoryFrame extends JFrame
 	// instance variables
 	private JLabel label1;
 	private JButton button1, button2;
+	Customer c = MainFrame.selectedCustomer;
 	
 	// constructor
-	public PurchaseHistoryFrame(Customer c)
+	public PurchaseHistoryFrame()
 	{
 		// configuration of the frame
 		this.setSize(400, 250);

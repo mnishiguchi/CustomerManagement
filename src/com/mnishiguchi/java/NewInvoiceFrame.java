@@ -42,7 +42,7 @@ public class NewInvoiceFrame extends JFrame
 	// Components
 	private JLabel label1;
 	private JButton button1, button2;
-	private Customer customer;
+	private Customer customer = MainFrame.selectedCustomer;
 	
 	// constructor
 	public NewInvoiceFrame()
@@ -63,8 +63,9 @@ public class NewInvoiceFrame extends JFrame
 		// ----------- create a Box with a label and a button -----------------
 		Box box1 = Box.createHorizontalBox();
 		
-		// create a label with today's date
-		label1 = new JLabel( FORMAT_DATE.format(purchaseDate) );
+		// create a label with a customer info
+		label1 = new JLabel(customer.getPrefix() + " " + 
+				customer.getLastName() + " - " + customer.getPhoneNumber());
 		
 		// create button with an event handler
 		button1 = new JButton(" => Add Purchase? ");
@@ -133,7 +134,7 @@ public class NewInvoiceFrame extends JFrame
 		this.add(scroll);                                                // table component with text area
 		
 		// ---------------- create a submit button ---------------------------
-		button2 = new JButton("               Show Invoice               ");
+		button2 = new JButton("               Create a new Invoice               ");
 		button2.addActionListener(handle);    // reuse event handler
 		
 		// create a panel and add button to it

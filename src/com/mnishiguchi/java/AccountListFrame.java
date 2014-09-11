@@ -149,8 +149,11 @@ public class AccountListFrame extends JFrame
 					}
 					else
 					{
-					    // show purchase data of this selected customer
-						new PurchaseHistoryFrame( customers.get(selectedIndex) );						
+						// remember this customer
+						MainFrame.selectedCustomer = customers.get(selectedIndex);
+						
+						// show purchase data of this selected customer
+						new PurchaseHistoryFrame();
 						AccountListFrame.this.dispose();     // close this frame
 					}
 				}

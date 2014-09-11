@@ -29,6 +29,7 @@ public class MainFrame extends JFrame
         new SimpleDateFormat("yyyy-MM-dd HH:mm");  // 2014-08-22 16:24
 	
 	// global reference
+	public static Customer selectedCustomer;
 	public static String invoiceNumber = "";
 	public static Stack<Article> purchasedArticles = new Stack<Article>();
 	
