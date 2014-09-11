@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -29,6 +30,7 @@ public class MainFrame extends JFrame
 	
 	// global reference
 	public static String invoiceNumber = "";
+	public static Stack<Article> purchasedArticles = new Stack<Article>();
 	
     // instance variables
 	private JButton button1,  button2, button3, button4, button5;

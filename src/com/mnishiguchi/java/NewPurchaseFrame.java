@@ -14,10 +14,10 @@ public class NewPurchaseFrame extends JFrame
 	private JTextField priceField;
 	private JSpinner qtySpinner;
 	private JButton button1;
-    
+
 	// constructor
 	public NewPurchaseFrame()
-	{		
+	{
 		// configuration of the frame
 		this.setSize(400, 250);
 		this.setResizable(false);
@@ -178,7 +178,7 @@ public class NewPurchaseFrame extends JFrame
 				// create an Article object and add to the ArrayList
 				NewInvoiceFrame.purchasedArticles.add( new Article (name, price, quantity) );
 				
-				new NewInvoiceFrame();	// show a new invoice's draft
+				new NewInvoiceFrame();    // show a new invoice's draft
 				NewPurchaseFrame.this.dispose();    // close this frame	
 			}
 		}

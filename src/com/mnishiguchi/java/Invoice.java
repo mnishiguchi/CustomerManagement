@@ -1,6 +1,7 @@
 package com.mnishiguchi.java;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Stack;
 
 /** Shows an invoice associated with a specified invoice number */
