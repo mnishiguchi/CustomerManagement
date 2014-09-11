@@ -36,11 +36,8 @@ public class NewInvoiceFrame extends JFrame
 	private static final String FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
 	private static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
-	// ingredients for creating an invoice
-	public static String invoiceNumber = "";    // get in this frame
-	public static Date purchaseDate = new Date();    // get the time now
-	public static double amount = 0.0;    // sum up Articles's subTolals
-	public static Stack<Article> purchasedArticles = new Stack<Article>();    // data sent from NewPurchaseFrame
+	// ingredients of Invoice    // data sent from NewPurchaseFrame
+	public static Stack<Article> purchasedArticles = new Stack<Article>();
 	
 	// Components
 	private JLabel label1, label2;
@@ -66,9 +63,6 @@ public class NewInvoiceFrame extends JFrame
 				// reset selected customer
 				MainFrame.selectedCustomer = null;
 				// reset ingredients
-				invoiceNumber = "";
-				purchaseDate = null;
-				amount = 0.0;
 				purchasedArticles.clear();
 			}
 		});
@@ -197,7 +191,8 @@ public class NewInvoiceFrame extends JFrame
 			else if (e.getSource() == button2)    // create a new invoice
 			{
 				// get invoice number from user input
-				if  ( invoiceField.getText().toString().matches("^|\\d{5}$") == false )
+				String input = invoiceField.getText().toString();
+				if  ( input.matches("^|\\d{5}$") == false )
 				{
 					JOptionPane.showMessageDialog( NewInvoiceFrame.this, 
 							"Please enter a 5-digit number (Example: 12345)", 
@@ -205,25 +200,21 @@ public class NewInvoiceFrame extends JFrame
 					invoiceField.requestFocus();    // move the focus back to the text field
 					return;    // quit this procedure right now
 				}
-				
-				// calculate total amount
-				amount = getGrandTotal(purchasedArticles);
+				String invoiceNumber = input;
 				
 				// validate ingredients
-				if ( purchaseDate == null )  System.out.println("purchaseDate == null");
-				if ( amount <= 0 )  System.out.println("amount <= 0");
-				if ( purchasedArticles.isEmpty() )  System.out.println("purchasedArticles.isEmpty()");
-				if ( purchasedArticles == null )  System.out.println("purchasedArticles.isEmpty()");
-				
-				if ( purchaseDate == null || amount <= 0 ||	purchasedArticles.isEmpty() || purchasedArticles == null )
+				if ( purchasedArticles.isEmpty() || purchasedArticles == null )
 				{
 					JOptionPane.showMessageDialog( NewInvoiceFrame.this, 
-							"Please provide invoice#, purchased articles and their quantities.", 
+							"Please provide purchased articles and their quantities.", 
 							"Message", JOptionPane.INFORMATION_MESSAGE);
 					return;    // quit this procedure right now
 				}
+				
+				// calculate total amount
+				double amount = getGrandTotal(purchasedArticles);
 				// create a new Invoice object with the ingredients
-				Invoice inv = new Invoice(invoiceNumber, purchaseDate, amount, purchasedArticles);
+				Invoice inv = new Invoice(invoiceNumber, new Date(), amount, purchasedArticles);
 				WriteFile.writeInvoice(inv);
 				
 				new InvoiceFrame(invoiceNumber);    // show this invoice
