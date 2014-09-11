@@ -26,7 +26,7 @@ public class MainFrame extends JFrame
 	public static final String PATH_INVOICE = "C:invoice\\";
 	public static final String FORMAT_AMOUNT = "%.2f";      // 1234.56
 	public static final DateFormat FORMAT_DATE =
-        new SimpleDateFormat("yyyy-MM-dd HH:mm");  // 2014-08-22 16:24
+			new SimpleDateFormat("yyyy-MM-dd HH:mm");  // 2014-08-22 16:24
 	
 	// global reference
 	public static Customer selectedCustomer;

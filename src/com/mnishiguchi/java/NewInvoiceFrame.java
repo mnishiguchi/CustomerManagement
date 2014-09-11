@@ -3,6 +3,8 @@ package com.mnishiguchi.java;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,7 +57,19 @@ public class NewInvoiceFrame extends JFrame
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setTitle("New Invoice");
 		this.setLocationRelativeTo(null);  // put it at the center of the screen
-		// this.addWindowListener();
+		
+		// listen for this frame's getting closed
+		this.addWindowListener( new WindowAdapter() {
+			public void windowClosing(WindowEvent event) {
+				// reset selected customer
+				MainFrame.selectedCustomer = null;
+				// reset ingredients
+				invoiceNumber = "";
+				purchaseDate = null;
+				amount = 0.0;
+				purchasedArticles.clear();
+			}
+		});
 		
 		// create a panel with BorderLayout
 		JPanel panel1 = new JPanel();
