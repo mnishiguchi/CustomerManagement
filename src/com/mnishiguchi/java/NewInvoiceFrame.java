@@ -15,9 +15,11 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -41,9 +43,10 @@ public class NewInvoiceFrame extends JFrame
 	public static Stack<Article> purchasedArticles = new Stack<Article>();    // data sent from NewPurchaseFrame
 	
 	// Components
-	private JLabel label1;
+	private JLabel label1, label2;
 	private JButton button1, button2;
 	private Customer customer = MainFrame.selectedCustomer;
+	private JTextField invoiceField;
 	
 	// constructor
 	public NewInvoiceFrame()
@@ -141,23 +144,37 @@ public class NewInvoiceFrame extends JFrame
 		// add table to scroll pane
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
 		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scroll.setBorder(BorderFactory.createLoweredBevelBorder());
+		scroll.setBorder( BorderFactory.createLoweredBevelBorder() );
 		
 		// add components to the frame
 		this.add(box1, BorderLayout.NORTH);    // box with label & button
 		this.add(scroll);                                                // table component with text area
 		
-		// ---------------- create a submit button ---------------------------
-		button2 = new JButton("               Create a new Invoice               ");
+		// ---------------- create the create invoice section -----------------
+		Box footerBox = Box.createHorizontalBox();    // container
+		
+		// create a text field for invoice number input
+		invoiceField = new JTextField(10);
+		
+		// create submit button
+		//JPanel buttonPanel = new JPanel( new BorderLayout() );
+		button2 = new JButton("=> Create a new Invoice");
 		button2.addActionListener(handle);    // reuse event handler
+		//buttonPanel.add(button2, BorderLayout.NORTH);
 		
-		// create a panel and add button to it
-		JPanel panel = new JPanel();
-		panel.add( button2 );
+		// add components to footerBox
+		footerBox.add( new JLabel("Invoice# : ") );
+		footerBox.add(invoiceField);
+		footerBox.add( Box.createHorizontalStrut(10) );
+		footerBox.add(button2);
 		
+		// add padding to footerBox
+		JPanel footerPadding = new JPanel();
+		footerPadding.setBorder( BorderFactory.createEmptyBorder(2,2,2,2) );
+		footerPadding.add(footerBox);    // add padding
+
 		// add button2 to the frame
-		this.add(panel, BorderLayout.SOUTH);
-	
+		this.add(footerPadding, BorderLayout.SOUTH);
 		this.setVisible(true);		// show this frame
 	}
 	
@@ -170,17 +187,62 @@ public class NewInvoiceFrame extends JFrame
 		public void actionPerformed(ActionEvent e)
 		{
 			// ------------------- respond to button1 -------------------------
-			if (e.getSource() == button1)
+			if (e.getSource() == button1)    // add new purchase
 			{
 				 // show a prompt for a new purchase
 				new NewPurchaseFrame();
 				NewInvoiceFrame.this.dispose();    // close this frame	
 			}
 			// ------------------- respond to button2 -------------------------
-			else if (e.getSource() == button2)
+			else if (e.getSource() == button2)    // create a new invoice
 			{
-				 // TODO
+				// get invoice number from user input
+				if  ( invoiceField.getText().toString().matches("^|\\d{5}$") == false )
+				{
+					JOptionPane.showMessageDialog( NewInvoiceFrame.this, 
+							"Please enter a 5-digit number (Example: 12345)", 
+							"Message", JOptionPane.INFORMATION_MESSAGE);
+					invoiceField.requestFocus();    // move the focus back to the text field
+					return;    // quit this procedure right now
+				}
+				
+				// calculate total amount
+				amount = getGrandTotal(purchasedArticles);
+				
+				// validate ingredients
+				if ( purchaseDate == null )  System.out.println("purchaseDate == null");
+				if ( amount <= 0 )  System.out.println("amount <= 0");
+				if ( purchasedArticles.isEmpty() )  System.out.println("purchasedArticles.isEmpty()");
+				if ( purchasedArticles == null )  System.out.println("purchasedArticles.isEmpty()");
+				
+				if ( purchaseDate == null || amount <= 0 ||	purchasedArticles.isEmpty() || purchasedArticles == null )
+				{
+					JOptionPane.showMessageDialog( NewInvoiceFrame.this, 
+							"Please provide invoice#, purchased articles and their quantities.", 
+							"Message", JOptionPane.INFORMATION_MESSAGE);
+					return;    // quit this procedure right now
+				}
+				// create a new Invoice object with the ingredients
+				Invoice inv = new Invoice(invoiceNumber, purchaseDate, amount, purchasedArticles);
+				WriteFile.writeInvoice(inv);
+				
+				new InvoiceFrame(invoiceNumber);    // show this invoice
+				NewInvoiceFrame.this.dispose();    // close this frame
 			}
+		}
+		
+		/**
+		 * @param purchasedArticles - Stack of Article objects that represents invoice's rows
+		 * @return sum of each row's subtotal
+		 */
+		private double getGrandTotal(Stack<Article> purchasedArticles)
+		{
+			double d = 0.0;
+			for (Article a : purchasedArticles)
+			{
+				d += a.getSubTotal();
+			}
+			return d;
 		}
 	}
 }

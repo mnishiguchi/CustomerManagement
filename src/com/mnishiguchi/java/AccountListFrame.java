@@ -91,17 +91,17 @@ public class AccountListFrame extends JFrame
 	    this.add(scroll, BorderLayout.CENTER);
 	    
 	    // create buttons with an event handler
-	    button1 = new JButton("     Show Purchase History     ");
+	    button1 = new JButton("Show Purchase History");
 	    OnButtonClickListener handle = new OnButtonClickListener();
 	    button1.addActionListener(handle);
 	    
-	    // create a panel and add button to it
-	    JPanel panel = new JPanel();
-	    panel.add( button1 );
-	    
-	    // add button1 to the frame
-	    this.add(panel, BorderLayout.SOUTH);
-	    
+		// add padding to button
+		JPanel footerPadding = new JPanel();
+		footerPadding.setBorder( BorderFactory.createEmptyBorder(2,2,2,2) );
+		footerPadding.add(button1);    // add padding
+
+		// add button2 to the frame
+		this.add(footerPadding, BorderLayout.SOUTH);
 	    this.setVisible(true);    // show this frame
 	}
 	

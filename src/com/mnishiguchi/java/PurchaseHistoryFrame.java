@@ -57,7 +57,7 @@ public class PurchaseHistoryFrame extends JFrame
 		label1 = new JLabel(prefix + " " + lastName + " - " + phoneNumber);
 		
 		// create button with an event handler
-		button1 = new JButton("Add New Purchase");
+		button1 = new JButton("=> Add New Purchase");
 		OnButtonClickListener handle = new OnButtonClickListener();
 		button1.addActionListener(handle);
 		
@@ -114,7 +114,7 @@ public class PurchaseHistoryFrame extends JFrame
 		this.add(scroll);                                                // table component with text area
 		
 		// create buttons with an event handler
-		button2 = new JButton("               Show Invoice               ");
+		button2 = new JButton("Show Invoice");
 		button2.addActionListener(handle);	// reuse event handler
 		
 		// create a panel and add button to it

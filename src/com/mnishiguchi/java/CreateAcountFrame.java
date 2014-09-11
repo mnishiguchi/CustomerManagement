@@ -1,5 +1,4 @@
 package com.mnishiguchi.java;
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -102,11 +101,11 @@ public class CreateAcountFrame  extends JFrame
 		gc.anchor = align;
 		gc.fill = GridBagConstraints.NONE;
 		p.add(c,  gc);
-	}		
+	}
 	
 	/** Inner class to listen for a click on button1 */
 	private class OnButtonClickListener implements ActionListener
-	{		
+	{
 		@Override
 		public void actionPerformed(ActionEvent event)
 		{
@@ -114,7 +113,7 @@ public class CreateAcountFrame  extends JFrame
 			Customer.Prefix prefix;
 			
 			if (event.getSource() == button1)
-			{	
+			{
 				// get data from user input
 				lastName = textField1.getText();
 				firstName = textField2.getText();

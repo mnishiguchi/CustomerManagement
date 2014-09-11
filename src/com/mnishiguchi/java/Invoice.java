@@ -25,6 +25,7 @@ public class Invoice
 	{
 		this.invoiceNumber = invoiceNumber; 
 	}
+	
 	public Invoice(String invoiceNumber, Date purchaseDate, double amount, Stack<Article> purchasedArticles)
 	{
 		this.invoiceNumber = invoiceNumber;
