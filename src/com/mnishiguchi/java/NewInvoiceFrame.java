@@ -55,6 +55,7 @@ public class NewInvoiceFrame extends JFrame
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setTitle("New Invoice");
 		this.setLocationRelativeTo(null);  // put it at the center of the screen
+		// this.addWindowListener();
 		
 		// create a panel with BorderLayout
 		JPanel panel1 = new JPanel();

@@ -9,22 +9,22 @@ public class Purchase
 	private Date date;
 	private double amount;
 	private String invoiceNumber;
-    
-    // constructor
-    public Purchase(Date date, double amount)
-    {
-    	this.date = date;
-    	this.amount = amount;
-    }
-    
-    public Purchase(Date date, double amount, String invoiceNumber)
-    {
-    	this.date = date;
-    	this.amount = amount;
-    	this.invoiceNumber = invoiceNumber;
-    }
 	
-    // accessor methods
+	// constructor
+	//public Purchase(Date date, double amount)
+	//{
+	//	this.date = date;
+	//	this.amount = amount;
+	//}
+	
+	public Purchase(Date date, double amount, String invoiceNumber)
+	{
+		this.date = date;
+		this.amount = amount;
+		this.invoiceNumber = invoiceNumber;
+	}
+	
+	// accessor methods
 	public Date getDate()
 	{
 		return date;

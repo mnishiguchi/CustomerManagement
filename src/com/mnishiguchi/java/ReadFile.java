@@ -86,55 +86,53 @@ public class ReadFile
         }
     	return customers;
     }
-    
-    /** Reads the purchase data of a specified customer from a file
-     * @param c   a Customer object to represent this customer
-     * @return      an ArrayList of this customer's purchase data, null if data is empty
-     */
-    public static Stack<Purchase>  getPurchaseList(Customer c)
-    {
-        Stack<Purchase> purchaseData = new Stack<Purchase>();
-        Date date = null;
-        double amount = 0.0;
-    	
-        // get data from the file 2021234567.txt
-        ArrayList<String> lines = getDataFromFile( PATH_CUSTOMER +  c.getPhoneNumber() + ".txt" );	// to store raw data
-        
-    	String[] data;       // to store processed data
-        for ( String line: lines )
-        {
-	    	data = line.split(DELIMITER);
-	    	
-	    	// ensure that data has exactly two items
-	    	if (data.length != 2)
-	    	{
-	       		System.out.println("Invalid Data format in ReadFile.getPurchaseList - data.length should be 2");
-	       		continue;
-	    	}
 
-	    	try
-	    	{
-	    	    // parse date
-	    	    date = (Date) FORMAT_DATE.parse( data[0] );
-		    	// parse amount
-		    	amount = Double.parseDouble( data[1].replaceAll(",", "") );    // remove commas if any
-		        purchaseData.add( new Purchase(date, amount) ) ;
-	    	}
-	    	catch (ParseException ex)
-	    	{
-	       		System.out.println("Date Parse Error in ReadFile.getPurchaseList");
-	       		System.exit(0);
-	    	}
-	    	catch (NumberFormatException ex)
-	    	{
-	        	System.out.println("Number Parse Error in ReadFile.getPurchaseList");
-	        	System.exit(0);
-	    	}
-	    }
-    	return purchaseData; 
-    }
-    
-    /**
+	/** Reads the purchase data of a specified customer from a file
+	* @param c - a Customer object to represent this customer
+	* @return      an ArrayList of this customer's purchase data, null if data is empty
+	*/
+	public static Stack<Purchase>  getPurchaseList(Customer c)
+	{
+		Stack<Purchase> purchaseData = new Stack<Purchase>();
+		Date date = null;
+		double amount = 0.0;
+		
+		// get data from /customer_data/2021234567.txt
+		ArrayList<String> lines = getDataFromFile( PATH_CUSTOMER +  c.getPhoneNumber() + ".txt" );
+		
+		String[] data;    // to store processed data
+		for ( String line : lines )
+		{
+			data = line.split(DELIMITER);
+			if (data.length != 3)    // ensure that data has exactly two items
+			{
+				System.out.println("Invalid Data format in ReadFile.getPurchaseList - data.length should be 3");
+				continue;
+			}
+			
+			try    // [0]=>date; [1]=> amount; [2]=>invoice#;
+			{
+				date = (Date) FORMAT_DATE.parse( data[0] );
+				amount = Double.parseDouble( data[1].replaceAll(",", "") );    // remove commas if any
+				
+				// create a new Purchase object and add it to the Stack
+				purchaseData.add( new Purchase( date, amount, data[2]) ) ;
+			}
+			catch (ParseException ex)
+			{
+				System.out.println("Date Parse Error in ReadFile.getPurchaseList");
+				System.exit(0);
+			}
+			catch (NumberFormatException ex)
+			{
+				System.out.println("Number Parse Error in ReadFile.getPurchaseList");
+				System.exit(0);
+			}
+		}
+		return purchaseData; 
+	}
+	
+	/**
      * @param invoiceNumber
      * @return	an Invoice object associated with a specified invoice number; 
      * null if the invoice creation failed.

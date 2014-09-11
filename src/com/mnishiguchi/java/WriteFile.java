@@ -15,7 +15,7 @@ import java.util.Stack;
  */
 public class WriteFile
 {
-    // constants
+	// constants
 	private static final String DELIMITER = MainFrame.DELIMITER;
 	private static final String PATH_CUSTOMER = MainFrame.PATH_CUSTOMER;
 	private static final String PATH_INVOICE = MainFrame.PATH_INVOICE;
@@ -23,121 +23,115 @@ public class WriteFile
 	private static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
 	/**
-     * @param	filename	 the name of a file that a PrintWriter object will be associated with.
-     * @return	a PrintWriter object associated with a specified file if its creation is successful. Otherwise null.
-     */	
-    private static PrintWriter openWriter(String filename)
-    {
-    	try
-    	{
-    		File file = new File(filename);
-    		
-    		if( file.exists() == false )    //if file doesn't exists, then create it
-    		{
-    			file.createNewFile();
-    		}
-    		PrintWriter out = new PrintWriter ( new BufferedWriter( new FileWriter(file, true) ) );
-    		return out;
-    	}
-    	catch (IOException e)
-    	{
-    		System.out.println("I/O Error in WriteFile.openWriter, when trying to open a file and create a PrintWriter object.");
-    		System.exit(0);
-    	}
-    	return null;
-    }
-    
-    /** Writes all the customer data in array list onto a specified file.
-     * @param c				an array list of Customer objects
-     * @param filename	a file name, on which to write the customer data.
-     */
-    public static void writeCustomer(ArrayList<Customer> customers)
-    {
-    	String filename1 = PATH_CUSTOMER + "customers.txt";
-    	
-    	// open file
-    	PrintWriter out = openWriter(filename1);
-    	
-    	String line;
-    	for (Customer c: customers)    // for each item
-        {
-        	// write it on a line
-        	line = c.getLastName();
-        	line += DELIMITER + c.getFirstName();
-        	line += DELIMITER + c.getPhoneNumber();
-        	line += DELIMITER + c.getZipCode();
-        	line += DELIMITER + c.getPrefix();
-        	out.println(line);
-        }
-    	out.close();  // close file
-    }       
-    
-    /** writeCustomer(Customer c)
-     * @param c	a Customer object
-     */
-    public static void writeCustomer(Customer c)
-    {
-    	String filename1 = PATH_CUSTOMER + "customers.txt";
-    	
-    	// open file
-    	PrintWriter out = openWriter(filename1);
-    	
-        // write it on a line
-        String line = c.getLastName();
-        line += DELIMITER + c.getFirstName();
-        line += DELIMITER + c.getPhoneNumber();
-        line += DELIMITER + c.getZipCode();
-        line += DELIMITER + c.getPrefix();
-        out.println(line);
+	 * @param filename - the name of a file that a PrintWriter object will be associated with.
+	 * @return a - PrintWriter object associated with a specified file if its creation is successful; otherwise null.
+	 */	
+	private static PrintWriter openWriter(String filename)
+	{
+		try
+		{
+			File file = new File(filename);
+			
+			if( file.exists() == false )    //if file doesn't exists, then create it
+			{
+				file.createNewFile();
+			}
+			PrintWriter out = new PrintWriter ( new BufferedWriter( new FileWriter(file, true) ) );
+			return out;
+		}
+		catch (IOException e)
+		{
+			System.out.println("I/O Error in WriteFile.openWriter, when trying to open a file and create a PrintWriter object.");
+			System.exit(0);
+		}
+		return null;
+	}
 
-    	out.close();  // close file
-    }   
-    
-    /** Writes an arrray of purchase data items(date and dollar amount) on a file.
-     * @param c		a Customer object
-     * @param data	an array list of this customer's purchase history
-     */
-    public static void writePurchase(Customer c, ArrayList<Purchase> data)
-    {
-		// filename 2021234567.txt
+	/** Writes all the customer data in array list onto a specified file.
+	 * @param c - an array list of Customer objects
+	 * @param filename - a file name, on which to write the customer data.
+	 */
+	public static void writeCustomer(ArrayList<Customer> customers)
+	{
+		String filename1 = PATH_CUSTOMER + "customers.txt";
+
+		// open file
+		PrintWriter out = openWriter(filename1);
+		
+		String line;
+		for (Customer c: customers)    // for each item
+		{
+			// write it on a line
+			line = c.getLastName();
+			line += DELIMITER + c.getFirstName();
+			line += DELIMITER + c.getPhoneNumber();
+			line += DELIMITER + c.getZipCode();
+			line += DELIMITER + c.getPrefix();
+			out.println(line);
+		}
+		out.close();  // close file
+	}
+	
+	/** writeCustomer(Customer c)
+	 * @param c - a Customer object
+	 */
+	public static void writeCustomer(Customer c)
+	{
+		String filename1 = PATH_CUSTOMER + "customers.txt";
+		
+		PrintWriter out = openWriter(filename1);    // open file
+		
+		// write it on a line
+		String line = c.getLastName();
+		line += DELIMITER + c.getFirstName();
+		line += DELIMITER + c.getPhoneNumber();
+		line += DELIMITER + c.getZipCode();
+		line += DELIMITER + c.getPrefix();
+		out.println(line);
+		
+		out.close();  // close file
+	}
+	
+	/** Writes an arrray of purchase data items(date and dollar amount) on a file.
+	 * @param c - a Customer object
+	 * @param data - an array list of this customer's purchase history
+	 */
+	public static void writePurchase(Customer c, ArrayList<Purchase> data)
+	{
 		String filename2 = PATH_CUSTOMER + c.getPhoneNumber() + ".txt";
+		PrintWriter out = openWriter(filename2);    // open file
 		
-		// open file
-    	PrintWriter out = openWriter(filename2); 	
-    	
-    	String line = "";
-    	for (Purchase p: data)                   // for each purchase
-    	{
-        	line = FORMAT_DATE.format( p.getDate() );
-        	line += DELIMITER + String.format( FORMAT_AMOUNT, p.getAmount() ); 
-        }
-        out.close();  // close file
-    }
+		String line = "";    // [0]=>date; [1]=> amount; [2]=>invoice#;
+		for (Purchase p : data)    // for each purchase
+		{
+			line = FORMAT_DATE.format( p.getDate() );
+			line += DELIMITER + String.format( FORMAT_AMOUNT, p.getAmount() );
+			line += DELIMITER + p.getInvoiceNumber();
+		}
+		out.close();  // close file
+	}
 
-    /** Writes one purchase data item (date and dollar amount) on a file.
-     * @param c    a Customer object to represent this customer
-     * @param p   a Purchase object to represent a specific purchase record
-     */
-    public static void writePurchase(Customer c, Purchase p)
-    {
-		// filename 2021234567.txt
+	/** Writes one purchase data item (date and dollar amount) on a file.
+	 * @param c    a Customer object to represent this customer
+	 * @param p   a Purchase object to represent a specific purchase record
+	 */
+	public static void writePurchase(Customer c, Purchase p)
+	{
 		String filename2 = PATH_CUSTOMER +  c.getPhoneNumber() + ".txt";
+		PrintWriter out = openWriter(filename2);    // open file
 		
-		// open file
-    	PrintWriter out = openWriter(filename2); 	
-    	
-    	String line = FORMAT_DATE.format( p.getDate() );
-        line += DELIMITER + String.format( FORMAT_AMOUNT, p.getAmount() );    
-        out.println(line);                          // write it on a line
-        
-        out.close();  // close file
-    }
-    
-    /** Writes an invoice on a file.
-     * @param c	an Invoice object which is to be written on file
-     */
-    public static void writeInvoice(Invoice inv)
-    {
+		String line = FORMAT_DATE.format( p.getDate() );    // [0]=>date; [1]=> amount; [2]=>invoice#;
+		line += DELIMITER + String.format( FORMAT_AMOUNT, p.getAmount() );
+		line += DELIMITER + p.getInvoiceNumber();
+		out.println(line);                          // write it on a line		
+		out.close();  // close file
+	}
+	
+	/** Writes an invoice on a file.
+	 * @param c	an Invoice object which is to be written on file
+	 */
+	public static void writeInvoice(Invoice inv)
+	{
 		// filename invoice_number.txt
 		String filename3 = PATH_INVOICE +  inv.getInvoiceNumber() + ".txt";
 		
