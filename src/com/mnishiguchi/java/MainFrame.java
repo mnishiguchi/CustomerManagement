@@ -97,7 +97,7 @@ public class MainFrame extends JFrame
 		public void actionPerformed(ActionEvent e)
 		{
 			 // ---------------------- respond to button1 ----------------------
-			if (e.getSource() == button1)                      
+			if (e.getSource() == button1)
 			{
 				new CreateAcountFrame();
 			}
@@ -107,11 +107,9 @@ public class MainFrame extends JFrame
 				// read all the customers from customers.txt
 				ArrayList<Customer> customerList = ReadFile.getCustomerList();
 				
-				// ensure customer exist
-				if (customerList == null || customerList.isEmpty() )
+				if (customerList == null || customerList.isEmpty() )    // ensure customer exist
 				{
-					JOptionPane.showMessageDialog( MainFrame.this, 
-							"No customer exists!", "Message", JOptionPane.INFORMATION_MESSAGE);
+					popupNotice("No customer exists!");
 				}
 				else
 				{
@@ -134,13 +132,11 @@ public class MainFrame extends JFrame
 					// ensure text field is not empty
 					if ( phoneNumber.equals("") )
 					{
-						JOptionPane.showMessageDialog( MainFrame.this, 
-								"You did not enter anything!", "Message", JOptionPane.INFORMATION_MESSAGE);
+						popupNotice("You did not enter anything!");
 					}
 					else if  ( phoneNumber.matches("^|\\d{10}$") == false )
 					{
-						JOptionPane.showMessageDialog( MainFrame.this, 
-								"Please enter a 10-digit number (Example: 2021118888)", "Message", JOptionPane.INFORMATION_MESSAGE);
+						popupNotice("Please enter a 10-digit number (Example: 2021118888)");
 					}
 					else break;
 				}
@@ -149,8 +145,7 @@ public class MainFrame extends JFrame
 				
 				if ( result == null || result.isEmpty() )
 				{
-					JOptionPane.showMessageDialog( MainFrame.this, 
-							"No customer data found", "Message", JOptionPane.INFORMATION_MESSAGE);	
+					popupNotice("No customer data found");	
 				}
 				else
 				{
@@ -173,14 +168,12 @@ public class MainFrame extends JFrame
 					// ensure text field is not empty
 					if ( lastName.equals("") )
 					{
-							JOptionPane.showMessageDialog( MainFrame.this, 
-									"You did not enter anything!", "Message", JOptionPane.INFORMATION_MESSAGE );
+						popupNotice("You did not enter anything!");
 					}
 					// validate last name
 					else if ( lastName.matches( "[a-zA-z]+([ '-][a-zA-Z]+)*") == false )
 					{
-						JOptionPane.showMessageDialog(	MainFrame.this, 
-								"Invalid Last Name Format", "Message", JOptionPane.INFORMATION_MESSAGE);
+						popupNotice("Invalid Last Name Format");
 					}
 					else break;
 				}
@@ -189,8 +182,7 @@ public class MainFrame extends JFrame
 				
 				if ( result == null || result.isEmpty() )
 				{
-					JOptionPane.showMessageDialog( MainFrame.this, 
-							"No customer data found", "Message", JOptionPane.INFORMATION_MESSAGE);	
+					popupNotice("no customer data found");	
 				}
 				else
 				{
@@ -233,11 +225,10 @@ public class MainFrame extends JFrame
 				}
 			}
 		}
-		/** Popup a notice window with a specified message. */
+		/** Pops up a notice window with a specified message. */
 		private void popupNotice(String msg)
 		{
-			JOptionPane.showMessageDialog( MainFrame.this, msg,
-					"Message", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog( MainFrame.this, msg, "Message", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }
