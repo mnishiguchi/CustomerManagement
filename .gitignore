@@ -13,6 +13,7 @@ hs_err_pid*
 
 # customer data
 customer_data/*.txt
+invoice/*.txt
 
 # from https://github.com/github/gitignore/blob/master/Global/Eclipse.gitignore
 *.pydevproject

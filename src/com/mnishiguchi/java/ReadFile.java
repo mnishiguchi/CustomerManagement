@@ -106,7 +106,7 @@ public class ReadFile
 			data = line.split(DELIMITER);
 			if (data.length != 3)    // ensure that data has exactly two items
 			{
-				System.out.println("Invalid Data format in ReadFile.getPurchaseList - data.length should be 3");
+				System.out.println("Invalid Data format in ReadFile.getPurchaseList - data.length != 3");
 				continue;
 			}
 			
@@ -133,46 +133,54 @@ public class ReadFile
 	}
 	
 	/**
-     * @param invoiceNumber
-     * @return	an Invoice object associated with a specified invoice number; 
-     * null if the invoice creation failed.
-     */
-    public static Invoice getInvoice(String invoiceNumber)
-    {
-    	// create an Invoice object
-    	Invoice inv = new Invoice(invoiceNumber);
-    	
-    	// get data from the invoice file
-    	String filePath = PATH_INVOICE + invoiceNumber + ".txt";
-    	ArrayList<String> lines = getDataFromFile(filePath);
-    	
-    	String[] data;	// to store processed data temporarily
-    	
-    	// get the purchase date from header and add it to the Invoice object
-    	try
-    	{
-    	    String header = lines.get(0);
-    	    lines.remove(0);  // remove this line from the ArrayList
-    	    Date d = (Date) FORMAT_DATE.parse( header);
-    	    inv.setPurchaseDate(d);
-    	}
-    	catch (ParseException ex)
-    	{
-    		System.out.println("Date parse error in ReadFile.getInvoice");
-    		return null;
-    	}
-    	
-    	// get purchased articles
-    	Stack<Article> purchasedArticles = new Stack<Article>();
-    	String name = "";
-    	double price = 0.0;
-    	int quantity = 0;
-        for (String temp: lines)
-        {
+	 * @param invoiceNumber
+	 * @return	an Invoice object associated with a specified invoice number; 
+	 * null if the invoice creation failed.
+	 * */
+	public static Invoice getInvoice(String invoiceNumber)
+	{
+			// create an Invoice object
+		Invoice inv = new Invoice(invoiceNumber);
+		
+		// get data from the invoice file
+		String filePath = PATH_INVOICE + invoiceNumber + ".txt";
+		ArrayList<String> lines = getDataFromFile(filePath);
+		
+		String[] data;	// to store processed data temporarily
+		
+		// ------------------------- get invoice header -----------------------
+		try    // [0]=>phoneNumber ; [1]=>purchaseDate
+		{
+			String headerData[] = lines.get(0).split(DELIMITER);
+			lines.remove(0);  // remove this line from the ArrayList
+			
+			if (headerData.length != 2)    // ensure that data has 2items
+			{
+				System.out.println("Invalid Data format in ReadFile.getInvoice - headerData.length != 2");
+				return null;
+			}
+			// get the purchase date from header and add it to the Invoice object
+			String phoneNumber = headerData[0];
+			inv.setPhoneNumber(phoneNumber);
+			Date d = (Date) FORMAT_DATE.parse( headerData[1] );
+			inv.setPurchaseDate(d);
+		}
+		catch (ParseException ex)
+		{
+			System.out.println("Date parse error in ReadFile.getInvoice");
+			return null;
+		}
+		// --------------------- get purchased articles ----------------------
+		Stack<Article> purchasedArticles = new Stack<Article>();
+		String name = "";
+		double price = 0.0;
+		int quantity = 0;
+		for (String temp: lines)    // [0]=> name; [1]=> price; [2]=> qty; 
+		{
         	data = temp.split(DELIMITER); 
         	if (data.length != 3)    // ensure that data has 3items
         	{
-        		System.out.println("Invalid Data format in ReadFile.getInvoice - data.length should be 3");
+        		System.out.println("Invalid Data format in ReadFile.getInvoice - data.length != 3");
         		continue;
         	}
         	// process data and add a new Article to the ArrayList
@@ -220,4 +228,17 @@ public class ReadFile
     	in.close();  // close file
     	return lines ;
     }
+	/** Checks if a specified file exists.
+	 * @param filePath
+	 * @return true if the file exists, else false
+	 */
+	public static boolean exists(String filePath)
+	{
+		File f = new File(filePath);
+		if ( f.exists() && !f.isDirectory() )
+		{
+			return true;
+		}
+		return false;
+	}
 }

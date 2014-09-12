@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -127,69 +126,73 @@ public class WriteFile
 		out.close();  // close file
 	}
 	
-	/** Writes an invoice on a file.
-	 * @param c	an Invoice object which is to be written on file
+	/** Writes an invoice on a file. Does nothing if the same invoice# exists.
+	 * @param c - an Invoice object which is to be written on file
 	 */
 	public static void writeInvoice(Invoice inv)
 	{
-		// filename invoice_number.txt
-		String filename3 = PATH_INVOICE +  inv.getInvoiceNumber() + ".txt";
+		String filePath = PATH_INVOICE +  inv.getInvoiceNumber() + ".txt";
+		if ( ReadFile.exists(filePath) )
+		{
+			System.out.println("FilePath |" + filePath + "| exists");
+			return;
+		}
 		
-		// open file
-    	PrintWriter out = openWriter(filename3); 	
-    	
-    	// write purchase date as a file header
-    	String line = genInvoiceHeader(inv);
-    	if (line == null)	// ensure that line is not empty
-    	{
-    		System.out.println("");
-    		System.exit(0);
-    	}
-        out.println(line);  // write it on the file
-        
-        // write purchased articles as a file body
-        ArrayList<String> lines = genInvoiceBoby(inv);
-        
-        for (String row : lines)
-        {
-        	out.println(row);  // write it on the file
-        }
-        out.close();  // close file
-    }
-    
-    /**  Generates a String for the header of an invoice file
-     * @param inv		an Invoice object
-     * @return	a String object to represent an invoice file's header; null if it doesn't exist
-     */
-    private static String genInvoiceHeader(Invoice inv)
-    {
-    	String line = FORMAT_DATE.format( inv.getPurchaseDate() );
-    	
-    	// ensure that line is not empty
-    	if ( line == null|| line.equals("") ) return null;
-    	
-    	return line;
-    }
-    
-    /**  Generates an ArrayList of Strings for the body of an invoice file
-     * @param inv		an Invoice object
-     * @return	an ArrayList of the lines of an invoice file's body; null if it is empty or error occurs
-     */
-    private static ArrayList<String> genInvoiceBoby(Invoice inv)
-    {
-    	// get purchased articles for this invoice
-    	Stack<Article> purchasedArticles = inv.getPurchasedArticles();
-    	
-    	ArrayList<String> lines = new ArrayList<String>();
-    	String line = "";
-    	for (Article a : purchasedArticles)
-    	{
-    		line = DELIMITER + a.getName();
-            line += DELIMITER + a.getPrice();
-            line += DELIMITER + a.getQuantity();
-            lines.add(line);	// add line to the ArrayList
-    	}
-    	if ( lines.isEmpty() ) return null;	// check if the ArrayList is empty
-    	return lines;
-    }
+		PrintWriter out = openWriter(filePath);    // open file
+		
+		// write invoice header    [0]=>phoneNumber ; [1]=>purchaseDate
+		String line = genInvoiceHeader(inv);
+		if (line == null)	// ensure that line is not empty
+		{
+			System.out.println("");
+			System.exit(0);
+		}
+		out.println(line);  // write it on the file
+		
+		// write invoice body    // [0]=> name; [1]=> price; [2]=> qty; 
+		ArrayList<String> lines = genInvoiceBoby(inv);
+		
+		for (String row : lines)
+		{
+			out.println(row);  // write it on the file
+		}
+		out.close();  // close file
+	}
+	
+	/**  Generates the header of an invoice file
+	 * @param inv - an Invoice object
+	 * @return a String object to represent an invoice file's header; null if it doesn't exist
+	 * */
+	private static String genInvoiceHeader(Invoice inv)
+	{
+		// [0]=>phoneNumber ; [1]=>purchaseDate
+		String line = inv.getPhoneNumber();
+		line += DELIMITER +  FORMAT_DATE.format( inv.getPurchaseDate() );
+		
+		// ensure that line is not empty
+		if ( line == null|| line.equals("") ) return null;
+		return line;
+		}
+	
+	/**  Generates the body of an invoice file
+	 * @param inv - an Invoice object
+	 * @return an ArrayList of the lines of an invoice file's body; null if it is empty or error occurs
+	 *  */
+	private static ArrayList<String> genInvoiceBoby(Invoice inv)
+	{
+		// get purchased articles for this invoice
+		Stack<Article> purchasedArticles = inv.getPurchasedArticles();
+		
+		ArrayList<String> lines = new ArrayList<String>();
+		String line = "";
+		for (Article a : purchasedArticles)    // [0]=> name; [1]=> price; [2]=> qty; 
+		{
+			line = a.getName();
+			line += DELIMITER + a.getPrice();
+			line += DELIMITER + a.getQuantity();
+			lines.add(line);	// add line to the ArrayList
+		}
+		if ( lines.isEmpty() ) return null;    // check if the ArrayList is empty
+		return lines;
+	}
 }

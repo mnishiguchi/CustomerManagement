@@ -13,6 +13,7 @@ import java.util.Stack;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,16 +35,17 @@ public class NewInvoiceFrame extends JFrame
 {
 	// Static constants
 	private static final String FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
-	private static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
-	// ingredients of Invoice    // data sent from NewPurchaseFrame
+	// ingredients of Invoice body    // data sent from NewPurchaseFrame
 	public static Stack<Article> purchasedArticles = new Stack<Article>();
 	
 	// Components
 	private JLabel label1, label2;
 	private JButton button1, button2;
-	private Customer customer = MainFrame.selectedCustomer;
 	private JTextField invoiceField;
+	private String invoiceNumber;
+	private Date now;
+	private Customer customer = MainFrame.selectedCustomer;
 	
 	// constructor
 	public NewInvoiceFrame()
@@ -60,9 +62,8 @@ public class NewInvoiceFrame extends JFrame
 		// listen for this frame's getting closed
 		this.addWindowListener( new WindowAdapter() {
 			public void windowClosing(WindowEvent event) {
-				// reset selected customer
+				// reset some static fields
 				MainFrame.selectedCustomer = null;
-				// reset ingredients
 				purchasedArticles.clear();
 			}
 		});
@@ -104,7 +105,7 @@ public class NewInvoiceFrame extends JFrame
 			tableRow[3] = "(no data)";
 			tableModel.addRow(tableRow);
 		}
-		else	// prepare a TableModel for table creation
+		else    // prepare a TableModel for table creation
 		{
 			for (Article record : purchasedArticles)
 			{
@@ -194,32 +195,55 @@ public class NewInvoiceFrame extends JFrame
 				String input = invoiceField.getText().toString();
 				if  ( input.matches("^|\\d{5}$") == false )
 				{
-					JOptionPane.showMessageDialog( NewInvoiceFrame.this, 
-							"Please enter a 5-digit number (Example: 12345)", 
-							"Message", JOptionPane.INFORMATION_MESSAGE);
+					popupNotice("Please enter a 5-digit number (Example: 12345)");
 					invoiceField.requestFocus();    // move the focus back to the text field
 					return;    // quit this procedure right now
 				}
-				String invoiceNumber = input;
-				
-				// validate ingredients
-				if ( purchasedArticles.isEmpty() || purchasedArticles == null )
+				else if ( input.equals("") )
 				{
-					JOptionPane.showMessageDialog( NewInvoiceFrame.this, 
-							"Please provide purchased articles and their quantities.", 
-							"Message", JOptionPane.INFORMATION_MESSAGE);
+					popupNotice("Please enter an invoice number.");
+					invoiceField.requestFocus();    // move the focus back to the text field
 					return;    // quit this procedure right now
 				}
 				
-				// calculate total amount
-				double amount = getGrandTotal(purchasedArticles);
-				// create a new Invoice object with the ingredients
-				Invoice inv = new Invoice(invoiceNumber, new Date(), amount, purchasedArticles);
-				WriteFile.writeInvoice(inv);
+				// Ensure that the same # doesn't exist
+				if ( Invoice.exists(input) )
+				{
+					popupNotice("This invoice# already exists.");
+					invoiceField.requestFocus();    // move the focus back to the text field
+					return;    // quit this procedure right now
+				}
+				else { invoiceNumber = input; }
 				
-				new InvoiceFrame(invoiceNumber);    // show this invoice
+				// validate purchasedArticles
+				if ( purchasedArticles.isEmpty() || purchasedArticles == null )
+				{
+					popupNotice("Please provide purchased articles and their quantities.");
+					return;    // quit this procedure right now
+				}
+				
+				// create a new Invoice object
+				now = new Date();   // current date&time
+				double amount = getGrandTotal(purchasedArticles);
+				Invoice inv = new Invoice(invoiceNumber, customer.getPhoneNumber(), 
+						now, amount, purchasedArticles);
+				
+				WriteFile.writeInvoice(inv);    // create an invoice file with this Invoice object
+				
+				// create a new Purchase object
+				Purchase purchase = new Purchase(now, amount, invoiceNumber);
+				WriteFile.writePurchase(customer, purchase);    // add this purchase to file
+				
+				new InvoiceFrame(inv);    // show this invoice
 				NewInvoiceFrame.this.dispose();    // close this frame
 			}
+		}
+		
+		/** Popup a notice window with a specified message. */
+		private void popupNotice(String msg)
+		{
+			JOptionPane.showMessageDialog( NewInvoiceFrame.this, msg,
+					"Message", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 		/**

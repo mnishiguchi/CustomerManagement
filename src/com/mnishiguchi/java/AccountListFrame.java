@@ -75,13 +75,13 @@ public class AccountListFrame extends JFrame
       	table.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
       	table.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
 
-	    // set column widths
-      	table.getColumnModel().getColumn(0).setPreferredWidth(33);
-      	table.getColumnModel().getColumn(1).setPreferredWidth(90);
-      	table.getColumnModel().getColumn(2).setPreferredWidth(90); 
-      	table.getColumnModel().getColumn(3).setPreferredWidth(100); 
-      	table.getColumnModel().getColumn(4).setPreferredWidth(60);
-      	
+		// set column widths
+		table.getColumnModel().getColumn(0).setPreferredWidth(33);
+		table.getColumnModel().getColumn(1).setPreferredWidth(90);
+		table.getColumnModel().getColumn(2).setPreferredWidth(90); 
+		table.getColumnModel().getColumn(3).setPreferredWidth(100); 
+		table.getColumnModel().getColumn(4).setPreferredWidth(60);
+		
 	    // add table to scroll pane
 	    JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
 	    		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);

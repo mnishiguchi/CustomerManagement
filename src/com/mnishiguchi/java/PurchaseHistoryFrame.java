@@ -10,6 +10,7 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,8 +28,10 @@ public class PurchaseHistoryFrame extends JFrame
 	
 	// instance variables
 	private JLabel label1;
+	private JTable table;
 	private JButton button1, button2;
 	Customer c = MainFrame.selectedCustomer;
+	Stack<Purchase> purchaseList;
 	
 	// constructor
 	public PurchaseHistoryFrame()
@@ -40,21 +43,16 @@ public class PurchaseHistoryFrame extends JFrame
 		this.setTitle("Purchase History");
 		this.setLocationRelativeTo(null);  // put it at the center of the screen
 
-		// get ustomer's info and purchase history
-		String prefix = c.getPrefix();    // "Mr." or "Ms."
-		String lastName = c.getLastName();
-		String phoneNumber = c.getPhoneNumber();
-		Stack<Purchase> purchaseList =  ReadFile.getPurchaseList(c);
+		// get ustomer's purchase history
+		purchaseList =  ReadFile.getPurchaseList(c);
 
 		// create a panel with BorderLayout
 		JPanel panel1 = new JPanel();
 		panel1.setLayout(new BorderLayout());
-
+		
+		// --------------------- create the header -------------------------------
 		// create a Box
 		Box box1 = Box.createHorizontalBox();
-		
-		// create a label
-		label1 = new JLabel(prefix + " " + lastName + " - " + phoneNumber);
 		
 		// create button with an event handler
 		button1 = new JButton("=> Add New Purchase");
@@ -62,75 +60,74 @@ public class PurchaseHistoryFrame extends JFrame
 		button1.addActionListener(handle);
 		
 		// add label and button to box1
-		box1.add( label1 );
-		box1.add( Box.createHorizontalGlue() );  // to separate components as far as possible
+		box1.add( new JLabel( c.getLabelString() ) );    // a customer info label
+		box1.add( Box.createHorizontalGlue() );    // to separate components as far as possible
 		box1.add( button1 );
-		box1.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+		box1.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));    // padding
+		this.add(box1, BorderLayout.NORTH);    // add to frame
 		
+		// --------------------- create the table -------------------------------
 		// create a table model	
 		Object[] tableRow = new Object[3];       // [0]=>date; [1]=>amount; [2]=>invoiceNumber
-		Object[] tableHead = {"Date", "Amount(US$)", "Invoice#"};
+		Object[] tableHead = {"Date", "Invoice#", "Amount(US$)"};
 		DefaultTableModel tableModel = new DefaultTableModel(tableHead, 0);    // initially no row
 		
-		// ensure that purchaseList is not null
-		if ( purchaseList == null || purchaseList.isEmpty() )
+		if ( purchaseList == null || purchaseList.isEmpty() )    // ensure that purchaseList is not null
 		{
 			tableRow[0] = "(no data)";
 			tableRow[1] = "(no data)";
 			tableRow[2] = "(no data)";
 			tableModel.addRow(tableRow);
 		}
-		else
+		else    // prepare a TableModel for table creation
 		{
-		Purchase record;    // temporary storage for each purchase record
-		while (purchaseList.isEmpty() == false)
+			for ( Purchase record : purchaseList)
 			{
-				// pop a record
-				record = purchaseList.pop();
-				
 				// append to the tableRows array
 				tableRow[0] = FORMAT_DATE.format( record.getDate() ) ;
-				tableRow[1] =  String.format( FORMAT_AMOUNT, record.getAmount() );
-				tableRow[2] = record.getInvoiceNumber();
+				tableRow[1] = record.getInvoiceNumber();
+				tableRow[2] =  String.format( FORMAT_AMOUNT, record.getAmount() );
 				tableModel.addRow(tableRow);
 			}
 		}
 		// create a table
-		JTable table = new JTable(tableModel);
+		table = new JTable(tableModel);
 		
 		// format each table row (align center)
 		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 		table.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+		table.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+		
+		// set column widths
+		table.getColumnModel().getColumn(0).setPreferredWidth(120);
+		table.getColumnModel().getColumn(1).setPreferredWidth(90);
+		table.getColumnModel().getColumn(2).setPreferredWidth(90); 
 		
 		// add table to scroll pane
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scroll.setBorder(BorderFactory.createLoweredBevelBorder());
 		
-		// add components to the frame
-		this.add(box1, BorderLayout.NORTH);    // box with label & button
-		this.add(scroll);                                                // table component with text area
+		this.add(scroll, BorderLayout.CENTER);    // add to frame
 		
+		// --------------------- create the footer -------------------------------
 		// create buttons with an event handler
 		button2 = new JButton("Show Invoice");
 		button2.addActionListener(handle);	// reuse event handler
+		JPanel buttonPanel = new JPanel( new BorderLayout() );
+		buttonPanel.add(button2, BorderLayout.NORTH);
+		buttonPanel.setBorder( BorderFactory.createEtchedBorder());
+		this.add(buttonPanel, BorderLayout.SOUTH);   // add to frame
 		
-		// create a panel and add button to it
-		JPanel panel = new JPanel();
-		panel.add( button2 );
-		
-		// add button2 to the frame
-		this.add(panel, BorderLayout.SOUTH);
-
-		// now frame is ready to be displayed
-		this.setVisible(true);
+		this.setVisible(true);    // show this frame
 	}
 	
 	/**
 	 * Inner class to listen for a click on buttons
 	 */
+	
 	private class OnButtonClickListener implements ActionListener
 	{
 		@Override
@@ -139,14 +136,38 @@ public class PurchaseHistoryFrame extends JFrame
 			// ------------------- respond to button1 -------------------------
 			if (e.getSource() == button1)
 			{
-				 // show a prompt for a new purchase
-				new NewPurchaseFrame();			
-				PurchaseHistoryFrame.this.dispose();    // close this frame	
+				// show a prompt for a new purchase
+				new NewPurchaseFrame();
+				PurchaseHistoryFrame.this.dispose();    // close this frame
 			}
 			// ------------------- respond to button2 -------------------------
-			else if (e.getSource() == button2)
+			else if (e.getSource() == button2)    // show invoice
 			{
-				 // TODO
+				if ( purchaseList == null ||purchaseList.isEmpty() )    // ensure the list is not empty
+				{
+					JOptionPane.showMessageDialog( PurchaseHistoryFrame.this, 
+							"No invoice to show.", "Message", JOptionPane.INFORMATION_MESSAGE);
+					PurchaseHistoryFrame.this.dispose();    // close this frame
+				}
+				else
+				{
+					// identify index of the selected row
+					int selectedIndex = table.getSelectedRow();  // -1 is returned if no row is selected.
+					
+					// ensure that a row is selected
+					if (selectedIndex == -1)
+					{
+						JOptionPane.showMessageDialog( PurchaseHistoryFrame.this, 
+								"Please select a purchase record.", "Message", 
+								JOptionPane.INFORMATION_MESSAGE);
+					}
+					else
+					{
+						// show the invoice of this selected purchase
+						String invoiceNumber = purchaseList.get(selectedIndex).getInvoiceNumber();
+						new InvoiceFrame( ReadFile.getInvoice(invoiceNumber) );
+					}
+				}
 			}
 		}
 	}

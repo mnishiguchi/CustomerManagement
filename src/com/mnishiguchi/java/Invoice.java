@@ -9,13 +9,15 @@ public class Invoice
 {
 	// static constants
 	public static final long LIFE_SPAN = 31556952000L;    // one year
+	
 	public static String[] articles = {
-			"Trounsers","M-Suits", "Coats","Shirts","Jackets","Uniforms",
+			"Trousers","M-Suits", "Coats","Shirts","Jackets","Uniforms",
 			"Sheets","Dresses", "Skirts","L-Suits","Blouses","Sweaters"
 			};
 	
 	// instance variables
-	private String invoiceNumber; 
+	private String invoiceNumber;
+	private String phoneNumber;
 	private Date purchaseDate;
 	private double amount;
 	private Stack<Article> purchasedArticles;
@@ -26,9 +28,11 @@ public class Invoice
 		this.invoiceNumber = invoiceNumber; 
 	}
 	
-	public Invoice(String invoiceNumber, Date purchaseDate, double amount, Stack<Article> purchasedArticles)
+	public Invoice(String invoiceNumber, String phoneNumber, Date purchaseDate, 
+			double amount, Stack<Article> purchasedArticles)
 	{
 		this.invoiceNumber = invoiceNumber;
+		this.phoneNumber = phoneNumber;;
 		this.purchaseDate = purchaseDate;
 		this.amount = amount;
 		this.purchasedArticles = purchasedArticles;
@@ -49,7 +53,17 @@ public class Invoice
 		
 		return (today_millisec - purchaseDate_millisec) < LIFE_SPAN;
 	}
-
+	
+	/** Checks if the invoice with a specified invoice number already exists.
+	 * @param invoiceNumber
+	 * @return true if the invoice already exists, else false
+	 */
+	public static boolean exists(String invoiceNumber)
+	{
+		String filePath = MainFrame.PATH_INVOICE + invoiceNumber + ".txt";
+		return ReadFile.exists(filePath);
+	}
+	
 	// accessor methods
 	public String getInvoiceNumber()
 	{
@@ -82,5 +96,13 @@ public class Invoice
 	public void setAmount(double amount)
 	{
 		this.amount = amount;
+	}
+	public String getPhoneNumber()
+	{
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber)
+	{
+		this.phoneNumber = phoneNumber;
 	}
 }

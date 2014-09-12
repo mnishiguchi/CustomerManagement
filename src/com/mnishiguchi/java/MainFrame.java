@@ -63,7 +63,7 @@ public class MainFrame extends JFrame
 		// create buttons
 		button1 = new JButton("Create A New Account");
 		button2 = new JButton("Show All Accounts");
-		button3 = new JButton("Show All Accounts");
+		button3 = new JButton("Search By Phone Number");
 		button4 = new JButton("Search By Last Name");
 		button5 = new JButton("Search By Invoice Number");
 		JButton[] buttons = {button1, button2, button3, button4, button5};
@@ -202,7 +202,7 @@ public class MainFrame extends JFrame
 			{
 				// TODO
 				System.out.println("button5 was clicked");
-				new NewInvoiceFrame();	// temporary
+				//new NewInvoiceFrame();	// temporary
 			}
 		}
 	}

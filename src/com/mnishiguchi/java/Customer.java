@@ -44,4 +44,9 @@ public class Customer
 		String p = (this.prefix == Prefix.MR) ? "Mr." : "Ms.";
 		return p;
 	}
+	public String getLabelString()
+	{
+		String s= this.getPrefix() + " " + this.lastName + " - " + this.phoneNumber;
+		return s;
+	}
 }
