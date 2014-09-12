@@ -54,6 +54,4 @@ public class Search
     	}
     	return result;
 	}
-	
-
 }

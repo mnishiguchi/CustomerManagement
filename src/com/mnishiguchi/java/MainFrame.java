@@ -150,7 +150,7 @@ public class MainFrame extends JFrame
 				if ( result == null || result.isEmpty() )
 				{
 					JOptionPane.showMessageDialog( MainFrame.this, 
-							"No customer data to show!", "Message", JOptionPane.INFORMATION_MESSAGE);	
+							"No customer data found", "Message", JOptionPane.INFORMATION_MESSAGE);	
 				}
 				else
 				{
@@ -190,7 +190,7 @@ public class MainFrame extends JFrame
 				if ( result == null || result.isEmpty() )
 				{
 					JOptionPane.showMessageDialog( MainFrame.this, 
-							"No customer data to show!", "Message", JOptionPane.INFORMATION_MESSAGE);	
+							"No customer data found", "Message", JOptionPane.INFORMATION_MESSAGE);	
 				}
 				else
 				{
@@ -200,10 +200,44 @@ public class MainFrame extends JFrame
 			// ---------------------- respond to button5 ---------------------- 
 			else if (e.getSource() == button5)
 			{
-				// TODO
-				System.out.println("button5 was clicked");
-				//new NewInvoiceFrame();	// temporary
+				String invoiceNumber;
+				while (true)
+				{
+					// get a phone number from user input
+					invoiceNumber = JOptionPane.showInputDialog( MainFrame.this, 
+							"Please enter an invoice: ", "Search By Invoice Number", JOptionPane.QUESTION_MESSAGE);
+					
+					if (invoiceNumber == null)  return;    // if user clicked on cancel button, end this procedure
+					
+					// ensure text field is not empty
+					if ( invoiceNumber.equals("") )
+					{
+						popupNotice("You did not enter anything!");
+					}
+					else if  ( invoiceNumber.matches("^|\\d{5}$") == false )
+					{
+						popupNotice("Please enter a 5-digit number (Example: 12345)");
+					}
+					else break;
+				}
+				// search for an invoice
+				Invoice result = Invoice.findByInvoiceNumber(invoiceNumber);
+				
+				if ( result == null )
+				{
+					popupNotice("No invoice found");
+				}
+				else
+				{
+					new  InvoiceFrame( result );    // show search result
+				}
 			}
+		}
+		/** Popup a notice window with a specified message. */
+		private void popupNotice(String msg)
+		{
+			JOptionPane.showMessageDialog( MainFrame.this, msg,
+					"Message", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }

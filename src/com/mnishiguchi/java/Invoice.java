@@ -64,6 +64,12 @@ public class Invoice
 		return ReadFile.exists(filePath);
 	}
 	
+	public static Invoice findByInvoiceNumber(String invoiceNumber)
+	{
+		Invoice inv = ReadFile.getInvoice(invoiceNumber);
+		return inv;
+	}
+	
 	// accessor methods
 	public String getInvoiceNumber()
 	{

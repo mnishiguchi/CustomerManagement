@@ -21,17 +21,16 @@ public class ReadFile
 	private static final String FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
 	private static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
-	/**
-     * Creates a Scanner object to read a specified file.
-     * @param     path of the file to be opened
-     * @return     a Scanner object associated with the specified file
+	/**Creates a Scanner object to read a specified file.
+     * @param filePath - path of the file to be opened
+     * @return a Scanner object associated with the specified file
      */
-    private static Scanner getScanner(String filename)
+    private static Scanner getScanner(String filePath)
     {
         Scanner in = null;
     	try
     	{
-    		File file = new File(filename);
+    		File file = new File(filePath);
     		
     		if (file.exists() == false)    //if file doesn't exists, then create it
     		{
@@ -48,8 +47,7 @@ public class ReadFile
     	return in;
     }    
     
-    /**
-     *  Reads the customer data from a file
+    /** Reads the customer data from a file
      * @return   an ArrayList of all the customers, null if data is empty
      */
     public static ArrayList<Customer> getCustomerList()
