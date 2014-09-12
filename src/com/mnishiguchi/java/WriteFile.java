@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -18,7 +19,7 @@ public class WriteFile
 	private static final String DELIMITER = MainFrame.DELIMITER;
 	private static final String PATH_CUSTOMER = MainFrame.PATH_CUSTOMER;
 	private static final String PATH_INVOICE = MainFrame.PATH_INVOICE;
-	private static final String FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
+	private static final DecimalFormat FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
 	private static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
 	/**
@@ -104,7 +105,7 @@ public class WriteFile
 		for (Purchase p : data)    // for each purchase
 		{
 			line = FORMAT_DATE.format( p.getDate() );
-			line += DELIMITER + String.format( FORMAT_AMOUNT, p.getAmount() );
+			line += DELIMITER + FORMAT_AMOUNT.format( p.getAmount() );
 			line += DELIMITER + p.getInvoiceNumber();
 		}
 		out.close();  // close file
@@ -120,7 +121,7 @@ public class WriteFile
 		PrintWriter out = openWriter(filename2);    // open file
 		
 		String line = FORMAT_DATE.format( p.getDate() );    // [0]=>date; [1]=> amount; [2]=>invoice#;
-		line += DELIMITER + String.format( FORMAT_AMOUNT, p.getAmount() );
+		line += DELIMITER + FORMAT_AMOUNT.format( p.getAmount() );
 		line += DELIMITER + p.getInvoiceNumber();
 		out.println(line);                          // write it on a line		
 		out.close();  // close file

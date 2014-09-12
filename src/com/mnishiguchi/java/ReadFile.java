@@ -2,6 +2,7 @@ package com.mnishiguchi.java;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class ReadFile
 	private static final String DELIMITER = MainFrame.DELIMITER;
 	private static final String PATH_CUSTOMER = MainFrame.PATH_CUSTOMER;
 	private static final String PATH_INVOICE = MainFrame.PATH_INVOICE;
-	private static final String FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
+	private static final DecimalFormat FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
 	private static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
 	/**Creates a Scanner object to read a specified file.

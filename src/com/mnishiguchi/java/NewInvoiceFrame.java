@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Stack;
@@ -34,7 +35,7 @@ import javax.swing.table.DefaultTableModel;
 public class NewInvoiceFrame extends JFrame
 {
 	// Static constants
-	private static final String FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
+	private static final DecimalFormat FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
 	
 	// ingredients of Invoice body    // data sent from NewPurchaseFrame
 	public static Stack<Article> purchasedArticles = new Stack<Article>();
@@ -112,10 +113,9 @@ public class NewInvoiceFrame extends JFrame
 				// append to the tableRows array
 				// [0]=>name; [1]=>price; [2]=>qty; [3]=>subTotal; 
 				tableRow[0] = record.getName();
-				tableRow[1] = String.format( FORMAT_AMOUNT, record.getPrice() );
+				tableRow[1] = FORMAT_AMOUNT.format( record.getPrice() );
 				tableRow[2] = record.getQuantity();	    	
-				tableRow[3] = String.format( 
-				FORMAT_AMOUNT, ( record.getPrice() * record.getQuantity() ) );
+				tableRow[3] = FORMAT_AMOUNT.format( record.getPrice() * record.getQuantity() );
 				tableModel.addRow(tableRow);
 			}
 		}

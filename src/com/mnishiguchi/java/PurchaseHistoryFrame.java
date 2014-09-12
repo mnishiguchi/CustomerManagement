@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
@@ -23,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 public class PurchaseHistoryFrame extends JFrame
 {
 	// constant
-	private static final String FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
+	private static final DecimalFormat FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
 	private static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
 	// instance variables
@@ -86,7 +87,7 @@ public class PurchaseHistoryFrame extends JFrame
 				// append to the tableRows array
 				tableRow[0] = FORMAT_DATE.format( record.getDate() ) ;
 				tableRow[1] = record.getInvoiceNumber();
-				tableRow[2] =  String.format( FORMAT_AMOUNT, record.getAmount() );
+				tableRow[2] =  FORMAT_AMOUNT.format( record.getAmount() );
 				tableModel.addRow(tableRow);
 			}
 		}

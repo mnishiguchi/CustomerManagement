@@ -6,6 +6,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -27,9 +28,9 @@ public class MainFrame extends JFrame
     public static final String DELIMITER = "\t";
 	public static final String PATH_CUSTOMER = "C:customer_data\\";
 	public static final String PATH_INVOICE = "C:invoice\\";
-	public static final String FORMAT_AMOUNT = "%.2f";      // 1234.56
-	public static final DateFormat FORMAT_DATE =
-			new SimpleDateFormat("yyyy-MM-dd HH:mm");  // 2014-08-22 16:24
+	//public static final String FORMAT_AMOUNT = "%.2f";      // 1234.56
+	public static final DecimalFormat FORMAT_AMOUNT = new DecimalFormat("#,###,##0.00");
+	public static final DateFormat FORMAT_DATE = 	new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
 	// global reference
 	public static Customer selectedCustomer;

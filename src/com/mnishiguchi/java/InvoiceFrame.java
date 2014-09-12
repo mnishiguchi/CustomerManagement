@@ -1,6 +1,7 @@
 package com.mnishiguchi.java;
 import java.awt.BorderLayout;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Stack;
@@ -21,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 public class InvoiceFrame extends JFrame
 {
 	// constant
-	public static final String FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
+	public static final DecimalFormat FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
 	public static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
 	// instance variables
@@ -112,9 +113,9 @@ public class InvoiceFrame extends JFrame
 				
 				// append to the tableRows array    // [0]=> name; [1]=> price; [2]=> qty; [3]= subTotal
 				tableRow[0] = record.getName();
-				tableRow[1] = String.format( FORMAT_AMOUNT, record.getPrice() );
+				tableRow[1] = FORMAT_AMOUNT.format( record.getPrice() );
 				tableRow[2] = record.getQuantity();
-				tableRow[3] = String.format( FORMAT_AMOUNT, record.getSubTotal() ); 
+				tableRow[3] = FORMAT_AMOUNT.format( record.getSubTotal() ); 
 				tableModel.addRow(tableRow);
 			}
 		}
