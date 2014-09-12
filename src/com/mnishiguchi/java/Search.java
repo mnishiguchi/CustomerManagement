@@ -53,34 +53,7 @@ public class Search
     			result.add(c);
     	}
     	return result;
-    }
-    
-    public static boolean exists(Customer customer)
-    {
-    	// read all the customers from customers.txt
-    	ArrayList<Customer> customerList = ReadFile.getCustomerList();    
-    	
-    	// ensure that the list is not empty
-    	if ( customerList == null || customerList.isEmpty() )
-    	{
-    		return false;
-    	}
-    	
-		String lastName = customer.getLastName();
-		String firstName = customer.getFirstName();
-		String phoneNumber = customer.getPhoneNumber();
-		String zipCode = customer.getZipCode();
-		
-    	for (Customer c : customerList)
-    	{
-    		if ( c.getLastName().equalsIgnoreCase(lastName)  &&
-    				c.getFirstName().equalsIgnoreCase(firstName) &&
-    				c.getPhoneNumber().equals(phoneNumber) &&
-    				c.getZipCode().equals(zipCode) )
-    		{
-    			 return true;
-    		}
-    	}
-    	return false;
-    }
+	}
+	
+
 }

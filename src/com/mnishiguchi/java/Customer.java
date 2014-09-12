@@ -1,5 +1,7 @@
 package com.mnishiguchi.java;
 
+import java.util.ArrayList;
+
 
 /** Represents a customer */
 public class Customer
@@ -48,5 +50,34 @@ public class Customer
 	{
 		String s= this.getPrefix() + " " + this.lastName + " - " + this.phoneNumber;
 		return s;
+	}
+
+	public boolean exists()
+	{
+		// read all the customers from customers.txt
+		ArrayList<Customer> customerList = ReadFile.getCustomerList();    
+		
+		// ensure that the list is not empty
+		if ( customerList == null || customerList.isEmpty() )
+		{
+			return false;
+		}
+		
+		String lastName = this.getLastName();
+		String firstName = this.getFirstName();
+		String phoneNumber = this.getPhoneNumber();
+		String zipCode = this.getZipCode();
+		
+		for (Customer c : customerList)
+		{
+			if ( c.getLastName().equalsIgnoreCase(lastName) &&
+					c.getFirstName().equalsIgnoreCase(firstName) &&
+					c.getPhoneNumber().equals(phoneNumber) &&
+					c.getZipCode().equals(zipCode) )
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 }

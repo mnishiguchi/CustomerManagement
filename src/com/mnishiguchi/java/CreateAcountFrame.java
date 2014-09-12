@@ -166,7 +166,7 @@ public class CreateAcountFrame  extends JFrame
 					Customer customer = new Customer(lastName, firstName, phoneNumber, zipCode, prefix);
 					
 					// check if this customer already exists
-					if ( Search.exists(customer) )
+					if ( customer.exists() )
 					{
 						JOptionPane.showMessageDialog( CreateAcountFrame.this, 
 								"This customer exists in your customer list!", "Message", 
