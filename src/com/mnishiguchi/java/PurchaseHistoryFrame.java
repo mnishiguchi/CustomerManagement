@@ -83,6 +83,9 @@ public class PurchaseHistoryFrame extends JFrame
 		{
 			for ( Purchase record : purchaseList)
 			{
+				// skip expired record
+				if ( record.isExpired() ) { continue; }
+				
 				// append to the tableRows array
 				tableRow[0] = FORMAT_DATE.format( record.getDate() ) ;
 				tableRow[1] = record.getInvoiceNumber();
@@ -113,7 +116,7 @@ public class PurchaseHistoryFrame extends JFrame
 		String since = "";
 		if ( purchaseList.size() > 0 )
 		{
-			Date d = purchaseList.get( purchaseList.size() - 1).getDate();    // oldest date
+			Date d = purchaseList.get(0).getDate();    // oldest date
 			 since= FORMAT_DATE.format(d);
 		}
 		else 

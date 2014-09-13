@@ -196,9 +196,9 @@ public class NewPurchaseFrame extends JFrame
 					System.exit(0);
 				}
 				// create an Article object and add to the ArrayList
-				NewInvoiceFrame.purchasedArticles.add( new Article (name, price, quantity) );
+				ShoppingCartFrame.purchasedArticles.add( new Article (name, price, quantity) );
 				
-				new NewInvoiceFrame();    // show a new invoice's draft
+				new ShoppingCartFrame();    // show a new invoice's draft
 				NewPurchaseFrame.this.dispose();    // close this frame	
 			}
 		}

@@ -44,4 +44,17 @@ public class Purchase
 	{
 		this.invoiceNumber = invoiceNumber;
 	}
+	
+	/**  checks if a Purchase  object is expired by referencing the constant Invoice.LIFE_SPAN.
+	*  @return true if the Purchase object is expired; false otherwise
+	*/
+	public boolean isExpired()
+	{
+		// get purchaseDate in milliseconds		
+		long purchaseDate_millisec = this.getDate().getTime();
+		// get today's Date in milliseconds
+		long today_millisec = new Date().getTime();
+		// check the time span
+		return (today_millisec - purchaseDate_millisec) > Invoice.LIFE_SPAN;
+	}
 }

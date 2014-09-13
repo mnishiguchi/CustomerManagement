@@ -38,20 +38,17 @@ public class Invoice
 		this.purchasedArticles = purchasedArticles;
 	}
 
-	/**  A static method to check if an Invoice object is expired by referencing the constant Invoice.LIFE_SPAN.
-	*  @param purchaseDate			a Date object to represent a purchase date
+	/**  Checks if an Invoice object is expired by referencing the constant Invoice.LIFE_SPAN.
 	*  @return	true if the Invoice object is expired; false otherwise
 	*/
-	public static boolean isExpired(Date purchaseDate)
+	public boolean isExpired()
 	{
 		// get purchaseDate in milliseconds		
-		long purchaseDate_millisec = purchaseDate.getTime();
-		
+		long purchaseDate_millisec = this.getPurchaseDate().getTime();
 		// get today's Date in milliseconds
-		Date t = new Date();
-		long today_millisec = t.getTime();
-		
-		return (today_millisec - purchaseDate_millisec) < LIFE_SPAN;
+		long today_millisec = new Date().getTime();
+		// check the time span
+		return (today_millisec - purchaseDate_millisec) > Invoice.LIFE_SPAN;
 	}
 	
 	/** Checks if the invoice with a specified invoice number already exists.

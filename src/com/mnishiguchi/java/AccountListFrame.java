@@ -41,7 +41,7 @@ public class AccountListFrame extends JFrame
 		if (customers == null || customers.isEmpty() )
 		{
 			JOptionPane.showMessageDialog( this, 
-					"There is no customer to show!", "Message", JOptionPane.INFORMATION_MESSAGE);
+					"There is no customer to show.", "Message", JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();    // close this frame
 			return;                  // end this procedure right now
 		}
@@ -115,7 +115,7 @@ public class AccountListFrame extends JFrame
 				if ( customers == null || customers.isEmpty() )
 				{
 					JOptionPane.showMessageDialog( AccountListFrame.this, 
-							"No customer data to show!", "Message", 
+							"No customer data to show.", "Message", 
 							JOptionPane.INFORMATION_MESSAGE);	
 					AccountListFrame.this.dispose();    // close this frame
 				}
