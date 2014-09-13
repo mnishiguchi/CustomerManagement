@@ -122,11 +122,11 @@ public class CreateAcountFrame  extends JFrame
 				phoneNumber = textField3.getText();
 				zipCode = textField4.getText();
 					
-				// ensure text field is not empty
-				if ( lastName.equals("") || firstName.equals("") || phoneNumber.equals("") || zipCode.equals("") )
+				 // Must provide lastName and phoneNumber
+				if ( lastName.equals("") || phoneNumber.equals("")  )
 				{
 					JOptionPane.showMessageDialog(	CreateAcountFrame.this, 
-							"Please fill in all the fields!", "Message", JOptionPane.INFORMATION_MESSAGE);
+							"Last name and phone number are required.", "Message", JOptionPane.INFORMATION_MESSAGE);
 					textField1.requestFocus();    // move the focus back to the text field
 				}	
 				// validate last name
