@@ -36,21 +36,21 @@ public class NewPurchaseFrame extends JFrame
 		radioPanel.setLayout( new GridBagLayout() );
 		radioPanel.setBorder( BorderFactory.createTitledBorder("Articles") );
 		
-		// create radio buttons
+		// create radio buttons for regular items
 		ButtonGroup group = new ButtonGroup();
 		JRadioButton rb = null;
 		int index = 0;
 		for (String name : Invoice.articles)
 		{
 		 	// create radio buttons; set the first one selected by default
-			rb = (index == 0) ? new JRadioButton(name, true) : new JRadioButton(name);
-			
+			rb = (index == 0) ? new JRadioButton(name) : new JRadioButton(name);
+			group.add( rb );    // add to the ButtonGroup
 			radioButtons.add(rb);
 			index += 1;    // increment index
 		}
 		// create an extra radio button for others
-		othersRadio = new JRadioButton("Others");
-		group.add( othersRadio );
+		othersRadio = new JRadioButton("Others", true);
+		group.add( othersRadio );    // add to the ButtonGroup
 		othersField = new JTextField(20);
 		
 		// add radioButtons to radioPanel
@@ -154,9 +154,9 @@ public class NewPurchaseFrame extends JFrame
 					priceField.requestFocus();
 					return;	// quit this procedure right now
 				}
-				else if ( StringChecker.isFloat(amount) == false )
+				else if ( StringChecker.isFloat(amount) == false  )
 				{
-					popupNotice("Invalid Dollar Amount  (Example : 123.45)");
+					popupNotice("Invalid Dollar Amount  (Example : 3.99)");
 					priceField.requestFocus();
 					return;    // quit this procedure right now
 				}

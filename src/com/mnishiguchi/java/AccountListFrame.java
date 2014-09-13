@@ -59,7 +59,7 @@ public class AccountListFrame extends JFrame
 			tableRow[0] = c.getPrefix();
 			tableRow[1] = c.getLastName();
 			tableRow[2] = c.getFirstName();
-			tableRow[3] = formatPhoneNumber( c.getPhoneNumber() );
+			tableRow[3] = c.getPhoneNumber().replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1)-$2-$3");
 			tableRow[4] = c.getZipCode();
 			tableModel.addRow(tableRow);
 		}
@@ -102,20 +102,6 @@ public class AccountListFrame extends JFrame
 		this.add(buttonPanel, BorderLayout.SOUTH);   // add to frame
 		
 		this.setVisible(true);    // show this frame
-	}
-	
-	/** Hyphenates a 10-digit numeric string (0000000000=>000-000-0000 */
-	private String formatPhoneNumber(String phoneNumber)
-	{
-		String s = "";
-		for ( int i = 0, end = phoneNumber.length(); i < end; i++)
-		{
-			if (i == 3 || i == 6)
-				s  += "-";
-			else
-				s += phoneNumber.charAt(i);
-		}
-		return s;
 	}
 	
 	/** Inner class to listen for a click on buttons */
