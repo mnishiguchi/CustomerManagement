@@ -30,6 +30,9 @@ public class MainFrame extends JFrame
     public static final String DELIMITER = "\t";
 	public static final String PATH_CUSTOMER = "C:customer_data\\";
 	public static final String PATH_INVOICE = "C:invoice\\";
+	public static final int WIDTH = 480;
+	public static final int HEIGHT = 300;
+	
 	//public static final String FORMAT_AMOUNT = "%.2f";      // 1234.56
 	public static final DecimalFormat FORMAT_AMOUNT = new DecimalFormat("#,###,##0.00");
 	public static final DateFormat FORMAT_DATE = 	new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -61,7 +64,7 @@ public class MainFrame extends JFrame
 	public MainFrame()
 	{
 		// configuration of the frame
-		this.setSize(400, 250);
+		this.setSize(WIDTH, HEIGHT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("Main Menu");
@@ -71,7 +74,7 @@ public class MainFrame extends JFrame
 		mainPanel.setBorder( BorderFactory.createLoweredBevelBorder() );
 		
 		JPanel subPanel = new JPanel();
-		subPanel.setBorder( BorderFactory.createEmptyBorder(3,3,3,3) );
+		subPanel.setBorder( BorderFactory.createEmptyBorder(16,0,0,0) );
 		
 		// create buttons
 		button1 = new JButton("Create A New Account");
@@ -92,7 +95,7 @@ public class MainFrame extends JFrame
 			buttons[i].addActionListener(handle);    // add event handler to each button
 			
 			// make buttons stretch  across the available width by putting them in BorderLayout.NORTH
-			if (i >0)  	buttonBox.add( Box.createVerticalStrut(12) );    // spacer
+			if (i >0)  	buttonBox.add( Box.createVerticalStrut(16) );    // spacer
 			panels[i] = new JPanel( new BorderLayout() );
 			panels[i].add(buttons[i], BorderLayout.NORTH);
 			buttonBox.add( panels[i] );

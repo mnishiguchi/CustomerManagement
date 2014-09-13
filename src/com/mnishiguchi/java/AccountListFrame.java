@@ -31,7 +31,7 @@ public class AccountListFrame extends JFrame
 		this.customers = customers;
 		
 		// configuration of the frame
-		this.setSize(400, 250);
+		this.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setTitle("Account List");
@@ -78,10 +78,10 @@ public class AccountListFrame extends JFrame
 		
 		// set column widths
 		table.getColumnModel().getColumn(0).setPreferredWidth(33);
-		table.getColumnModel().getColumn(1).setPreferredWidth(90);
-		table.getColumnModel().getColumn(2).setPreferredWidth(90); 
+		table.getColumnModel().getColumn(1).setPreferredWidth(120);
+		table.getColumnModel().getColumn(2).setPreferredWidth(120); 
 		table.getColumnModel().getColumn(3).setPreferredWidth(100); 
-		table.getColumnModel().getColumn(4).setPreferredWidth(60);
+		table.getColumnModel().getColumn(4).setPreferredWidth(80);
 		
 		// add table to scroll pane
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 

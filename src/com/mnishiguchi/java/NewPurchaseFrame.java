@@ -10,7 +10,10 @@ import javax.swing.*;
 public class NewPurchaseFrame extends JFrame
 {
 	// instance variables
-	ArrayList<JRadioButton>radioButtons = new ArrayList<JRadioButton>(Invoice.articles.length);
+	private ArrayList<JRadioButton>radioButtons = new ArrayList<JRadioButton>(Invoice.articles.length);
+	private JRadioButton othersRadio;
+	private JRadioButton selectedRadio;
+	private JTextField othersField;
 	private JTextField priceField;
 	private JSpinner qtySpinner;
 	private JButton button1;
@@ -19,7 +22,7 @@ public class NewPurchaseFrame extends JFrame
 	public NewPurchaseFrame()
 	{
 		// configuration of the frame
-		this.setSize(400, 250);
+		this.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setTitle("Add New Purchase");
@@ -44,8 +47,13 @@ public class NewPurchaseFrame extends JFrame
 			
 			radioButtons.add(rb);
 			group.add( radioButtons.get(index) );
-			index += 1;	// increment index
+			index += 1;    // increment index
 		}
+		// create an extra radio button for others
+		othersRadio = new JRadioButton("Others");
+		group.add( othersRadio );
+		othersField = new JTextField(20);
+		
 		// add radioButtons to radioPanel
 		addGridItem(radioPanel, radioButtons.get(0), 0, 0, 1, 1, GridBagConstraints.WEST);
 		addGridItem(radioPanel, radioButtons.get(1), 1, 0, 1, 1, GridBagConstraints.WEST);
@@ -59,6 +67,8 @@ public class NewPurchaseFrame extends JFrame
 		addGridItem(radioPanel, radioButtons.get(9), 1, 2, 1, 1, GridBagConstraints.WEST);
 		addGridItem(radioPanel, radioButtons.get(10), 2, 2, 1, 1, GridBagConstraints.WEST);
 		addGridItem(radioPanel, radioButtons.get(11), 3, 2, 1, 1, GridBagConstraints.WEST);
+		addGridItem(radioPanel,othersRadio, 0, 3, 1, 1, GridBagConstraints.WEST);
+		addGridItem(radioPanel, othersField, 1, 3, 3, 1, GridBagConstraints.WEST);
 		
 		// add radioPanel  to the mainPanel
 		addGridItem(mainPanel, radioPanel, 0, 0, 1, 1, GridBagConstraints.CENTER);
@@ -68,7 +78,7 @@ public class NewPurchaseFrame extends JFrame
 		// add a label to box1
 		box1.add( new JLabel("Unit Price : $") );    
 		// add a text field to box1
-		priceField = new JTextField(8);
+		priceField = new JTextField(12);
 		box1.add(priceField);    
 		// add a separator to box1
 		box1.add( Box.createHorizontalStrut(20) );	// blank space
@@ -142,7 +152,7 @@ public class NewPurchaseFrame extends JFrame
 				if ( amount.equals("") )	// ensure text field is not empty
 				{
 					JOptionPane.showMessageDialog( NewPurchaseFrame.this, 
-							"You did not enter anything!", "Message", JOptionPane.INFORMATION_MESSAGE);
+							"Please enter  a price", "Message", JOptionPane.INFORMATION_MESSAGE);
 					return;	// quit this procedure right now
 				}
 				else if ( StringChecker.isFloat(amount) == false )
@@ -153,20 +163,34 @@ public class NewPurchaseFrame extends JFrame
 					return;	// quit this procedure right now
 				}
 				// ------------------ process data ----------------------------
+				// get selected article
+				for (JRadioButton rb : radioButtons)
+				{
+					if ( rb.isSelected() )
+					{
+						selectedRadio = rb;
+						break;
+					}
+				}
+				if ( selectedRadio != null )
+				{
+					name = selectedRadio.getText();
+				}
+				else
+				{
+					if ( othersField.getText().equals("") )	
+					{
+						JOptionPane.showMessageDialog( NewPurchaseFrame.this, 
+								"Please enter  the name of this item", "Message", JOptionPane.INFORMATION_MESSAGE);
+						return;
+					}
+					else name =  othersField.getText();
+				}
+			
 				try
 				{
-					// get selected article
-					for (JRadioButton rb : radioButtons)
-					{
-						if ( rb.isSelected() )
-						{
-							name = rb.getText();
-						}
-					}
-					
 					// get price
 					price =Double.parseDouble( amount );
-					
 					// get quantity
 					quantity = (int) qtySpinner.getValue();
 				}

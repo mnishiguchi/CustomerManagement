@@ -64,7 +64,7 @@ public class InvoiceFrame extends JFrame
 		purchasedArticles = inv.getPurchasedArticles();
 		
 		// configuration of the frame
-		this.setSize(400, 250);
+		this.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setTitle("Invoice #" + invoiceNumber);

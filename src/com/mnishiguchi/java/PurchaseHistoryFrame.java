@@ -37,7 +37,7 @@ public class PurchaseHistoryFrame extends JFrame
 	public PurchaseHistoryFrame()
 	{
 		// configuration of the frame
-		this.setSize(400, 250);
+		this.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setTitle("Purchase History");
@@ -117,8 +117,8 @@ public class PurchaseHistoryFrame extends JFrame
 		Box footerBox = Box.createHorizontalBox();  // for Grand Total
 		footerBox.setBorder( BorderFactory.createEmptyBorder(10,0,10,0));
 		footerBox.add( Box.createHorizontalGlue() );
-		footerBox.add( new JLabel("Since " + since + "    -    Total : " + total) );
-		footerBox.add( Box.createHorizontalStrut(30) );
+		footerBox.add( new JLabel("Since " + since + "        -        Total : " + total) );
+		footerBox.add( Box.createHorizontalStrut(60) );
 		tablePanel.add(scroll, BorderLayout.CENTER);
 		tablePanel.add(footerBox, BorderLayout.SOUTH);
 		

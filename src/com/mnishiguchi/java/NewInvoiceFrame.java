@@ -54,10 +54,10 @@ public class NewInvoiceFrame extends JFrame
 		System.out.println("purchasedArticles.size = " + purchasedArticles.size());
 		
 		// configuration of the frame
-		this.setSize(400, 250);
+		this.setSize(MainFrame.WIDTH, MainFrame.HEIGHT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setTitle("New Invoice");
+		this.setTitle("Shopping Cart");
 		this.setLocationRelativeTo(null);  // put it at the center of the screen
 		
 		// listen for this frame's getting closed
