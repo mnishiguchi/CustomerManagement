@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
@@ -27,8 +28,6 @@ public class PurchaseHistoryFrame extends JFrame
 	private static final DecimalFormat FORMAT_AMOUNT = MainFrame.FORMAT_AMOUNT;
 	private static final DateFormat FORMAT_DATE = MainFrame.FORMAT_DATE;
 	
-	// instance variables
-	private JLabel label1;
 	private JTable table;
 	private JButton button1, button2;
 	private Customer c = MainFrame.selectedCustomer;
@@ -110,13 +109,15 @@ public class PurchaseHistoryFrame extends JFrame
 		scroll.setBorder(BorderFactory.createLoweredBevelBorder());
 		JPanel tablePanel = new JPanel( new BorderLayout() );
 		
+		Date d = purchaseList.get( purchaseList.size() - 1).getDate();    // oldest date
+		String since = FORMAT_DATE.format(d);
+		double t = getGrandTotal(purchaseList);    // sum of purchase amounts
+		String total =  "$" + FORMAT_AMOUNT.format(t);
+		
 		Box footerBox = Box.createHorizontalBox();  // for Grand Total
 		footerBox.setBorder( BorderFactory.createEmptyBorder(10,0,10,0));
 		footerBox.add( Box.createHorizontalGlue() );
-		footerBox.add( new JLabel("Grand Total : ") );
-		footerBox.add( Box.createHorizontalStrut(15) );
-		double grandTotal = getGrandTotal(purchaseList);
-		footerBox.add( new JLabel( "$" + FORMAT_AMOUNT.format(grandTotal) ) );
+		footerBox.add( new JLabel("Since " + since + "    -    Total : " + total) );
 		footerBox.add( Box.createHorizontalStrut(30) );
 		tablePanel.add(scroll, BorderLayout.CENTER);
 		tablePanel.add(footerBox, BorderLayout.SOUTH);
