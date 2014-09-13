@@ -50,6 +50,7 @@ public class NewPurchaseFrame extends JFrame
 		}
 		// create an extra radio button for others
 		othersRadio = new JRadioButton("Others", true);
+		othersRadio.addItemListener( new RadioSelectedListener() );
 		group.add( othersRadio );    // add to the ButtonGroup
 		othersField = new JTextField(20);
 		
@@ -206,6 +207,17 @@ public class NewPurchaseFrame extends JFrame
 		private void popupNotice(String msg)
 		{
 			JOptionPane.showMessageDialog( NewPurchaseFrame.this, msg, "Message", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+	/** When "Others" is selected, moves the focus to the text field. */
+	class RadioSelectedListener implements ItemListener
+	{
+		public void itemStateChanged(ItemEvent e)
+		{
+			if (e.getStateChange() == ItemEvent.SELECTED)
+			{
+				othersField.requestFocus();
+			}
 		}
 	}
 }
