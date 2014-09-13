@@ -30,11 +30,12 @@ public class NewPurchaseFrame extends JFrame
 	
 		// mainPanel
 		JPanel mainPanel = new JPanel( new GridBagLayout() );
+		mainPanel.setBorder( BorderFactory.createEmptyBorder(12,0,5,0) );
 		
 		// ----------- create a panel with radioButtons --------------------------
 		JPanel radioPanel = new JPanel();
 		radioPanel.setLayout( new GridBagLayout() );
-		radioPanel.setBorder( BorderFactory.createTitledBorder("Articles") );
+		radioPanel.setBorder( BorderFactory.createLineBorder(Color.GRAY, 1, true) );
 		
 		// create radio buttons for regular items
 		ButtonGroup group = new ButtonGroup();

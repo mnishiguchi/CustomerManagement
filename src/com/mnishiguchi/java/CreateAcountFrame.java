@@ -69,6 +69,7 @@ public class CreateAcountFrame  extends JFrame
 		prefix.add(radioMs);
 		Box radioBox = Box.createHorizontalBox();
 		radioBox.add(radioMr);
+		radioBox.add( Box.createHorizontalStrut(9) );
 		radioBox.add(radioMs);
 		
 		addGridItem(panel, radioBox, 1, 4, 1, 1, GridBagConstraints.WEST);
@@ -80,7 +81,8 @@ public class CreateAcountFrame  extends JFrame
 		
 		addGridItem(panel, button1, 1, 5, 1, 1, GridBagConstraints.WEST);
 		
-		mainPanel.add(panel);             // add panel to the frame	
+		mainPanel.add(panel);             // add panel to the frame
+		mainPanel.setBorder( BorderFactory.createEmptyBorder(20,0,0,15) );
 		this.add(mainPanel);
 		this.setVisible(true);    // show this frame
 	}
