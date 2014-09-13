@@ -1,5 +1,6 @@
 package com.mnishiguchi.java;
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
@@ -109,20 +110,33 @@ public class PurchaseHistoryFrame extends JFrame
 		scroll.setBorder(BorderFactory.createLoweredBevelBorder());
 		JPanel tablePanel = new JPanel( new BorderLayout() );
 		
-		Date d = purchaseList.get( purchaseList.size() - 1).getDate();    // oldest date
-		String since = FORMAT_DATE.format(d);
+		String since = "";
+		if ( purchaseList.size() > 0 )
+		{
+			Date d = purchaseList.get( purchaseList.size() - 1).getDate();    // oldest date
+			 since= FORMAT_DATE.format(d);
+		}
+		else 
+		{
+			since = "Today";
+		}
+			
 		double t = getGrandTotal(purchaseList);    // sum of purchase amounts
 		String total =  "$" + FORMAT_AMOUNT.format(t);
 		
+		//  create the table footer (to show total amount)
 		Box footerBox = Box.createHorizontalBox();  // for Grand Total
 		footerBox.setBorder( BorderFactory.createEmptyBorder(10,0,10,0));
 		footerBox.add( Box.createHorizontalGlue() );
-		footerBox.add( new JLabel("Since " + since + "        -        Total : " + total) );
+		JLabel totalLabel = new JLabel("Since " + since + "        -        Total : " + total);
+		totalLabel.setFont( new Font("Arial",Font.PLAIN,16) );
+		footerBox.add( totalLabel );
 		footerBox.add( Box.createHorizontalStrut(60) );
+		
 		tablePanel.add(scroll, BorderLayout.CENTER);
 		tablePanel.add(footerBox, BorderLayout.SOUTH);
 		
-		// --------------------- create the footer -------------------------------
+		// --------------------- create the bottom -------------------------------
 		// create buttons with an event handler
 		button2 = new JButton("Show Invoice");
 		button2.addActionListener(handle);	// reuse event handler

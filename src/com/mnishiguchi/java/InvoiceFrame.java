@@ -145,11 +145,9 @@ public class InvoiceFrame extends JFrame
 		Box footerBox = Box.createHorizontalBox();  // for Grand Total
 		footerBox.setBorder( BorderFactory.createEmptyBorder(10,0,10,0));
 		footerBox.add( Box.createHorizontalGlue() );
-		JLabel totalPanel = new JLabel("Grand Total :     $" + FORMAT_AMOUNT.format(grandTotal) );
-		totalPanel.setFont( new Font("Arial",Font.PLAIN,16) );
-		footerBox.add( totalPanel );
-		//footerBox.add( Box.createHorizontalStrut(15) );
-		//footerBox.add( new JLabel( "$" + FORMAT_AMOUNT.format(grandTotal) ) );
+		JLabel totalLabel = new JLabel("Grand Total :     $" + FORMAT_AMOUNT.format(grandTotal) );
+		totalLabel.setFont( new Font("Arial",Font.PLAIN,16) );
+		footerBox.add( totalLabel );
 		footerBox.add( Box.createHorizontalStrut(30) );
 
 		tablePanel.add(scroll, BorderLayout.CENTER);
