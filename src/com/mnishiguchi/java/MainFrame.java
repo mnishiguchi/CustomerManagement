@@ -27,7 +27,7 @@ import javax.swing.UIManager;
 public class MainFrame extends JFrame
 {
 	// Global constants
-    public static final String DELIMITER = "\t";
+	public static final String DELIMITER = "\t";
 	public static final String PATH_CUSTOMER = "C:customer_data\\";
 	public static final String PATH_INVOICE = "C:invoice\\";
 	public static final int WIDTH = 480;
@@ -47,17 +47,13 @@ public class MainFrame extends JFrame
 	
 	public static void main(String[] args)   // program starts from here
 	{
+		// set fonts
 		UIManager.put("Button.font", new Font("Calibri",Font.PLAIN,16) );
 		UIManager.put("TextField.font", new Font("Arial",Font.PLAIN,14));
 		UIManager.put("Table.font", new Font("Arial",Font.PLAIN,14));
 		UIManager.put("Label.font", new Font("Arial",Font.PLAIN,14));
-		//UIManager.put("RadioButton.font", /* font of your liking */);
 		
-		//UIManager.put("Panel.font", /* font of your liking */);
-
-		//UIManager.put("TableHeader.font", /* font of your liking */);
-		
-		new MainFrame();
+		new MainFrame();    // start the application
 	}
 	
 	// constructor
