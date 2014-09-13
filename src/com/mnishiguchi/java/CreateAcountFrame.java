@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -62,22 +63,21 @@ public class CreateAcountFrame  extends JFrame
 		
 		// create radio buttons
 		ButtonGroup prefix = new ButtonGroup();
-		radioMr = new JRadioButton("Mr.");
-		radioMr.setSelected(true);  // selected by default
+		radioMr = new JRadioButton("Mr.", true);  // selected by default
 		radioMs = new JRadioButton("Ms.");
 		prefix.add(radioMr);
 		prefix.add(radioMs);
+		Box radioBox = Box.createHorizontalBox();
+		radioBox.add(radioMr);
+		radioBox.add(radioMs);
 		
-		// add radio buttons to the panel
-		addGridItem(panel, radioMr, 0, 4, 1, 1, GridBagConstraints.EAST);
-		addGridItem(panel, radioMs, 1, 4, 1, 1, GridBagConstraints.WEST);	    
+		addGridItem(panel, radioBox, 1, 4, 1, 1, GridBagConstraints.WEST);
 		
 		// create button with event handler
 		button1 = new JButton("Create A New Acount");
 		OnButtonClickListener handle = new OnButtonClickListener();
 		button1.addActionListener(handle);
 		
-		// add button to the panel
 		addGridItem(panel, button1, 1, 5, 1, 1, GridBagConstraints.WEST);
 		
 		mainPanel.add(panel);             // add panel to the frame	
