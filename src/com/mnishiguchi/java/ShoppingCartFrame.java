@@ -149,9 +149,9 @@ public class ShoppingCartFrame extends JFrame
 		// ---------------- create the bottom ---------------------------------
 		// footer1
 		Box footerBox1 = Box.createHorizontalBox();  // for Grand Total
-		footerBox1.setBorder( BorderFactory.createEmptyBorder(10,0,10,0));
+		footerBox1.setBorder( BorderFactory.createEmptyBorder(10,0,10,0) );
 		footerBox1.add( Box.createHorizontalGlue() );
-		JLabel totalLabel = new JLabel("Grand Total :     $" + FORMAT_AMOUNT.format(grandTotal) );
+		JLabel totalLabel = new JLabel( "Grand Total :     $" + FORMAT_AMOUNT.format(grandTotal) );
 		totalLabel.setFont( new Font("Arial",Font.PLAIN,16) );
 		footerBox1.add( totalLabel );
 		footerBox1.add( Box.createHorizontalStrut(30) );
@@ -216,7 +216,10 @@ public class ShoppingCartFrame extends JFrame
 					invoiceField.requestFocus();
 					return;    // quit this procedure right now
 				}
-				else { invoiceNumber = input; }
+				else
+				{
+					invoiceNumber = input;
+				}
 				
 				// validate purchasedArticles
 				if ( purchasedArticles.isEmpty() || purchasedArticles == null )
@@ -237,11 +240,12 @@ public class ShoppingCartFrame extends JFrame
 				Purchase purchase = new Purchase(now, grandTotal, invoiceNumber);
 				WriteFile.writePurchase(customer, purchase);    // add this purchase to file
 				
+				new InvoiceFrame(inv);    // show this invoice
+				
 				// reset some static fields
 				MainFrame.selectedCustomer = null;    // forget this customer
 				purchasedArticles.clear();    // clear the shopping cart
 				
-				new InvoiceFrame(inv);    // show this invoice
 				ShoppingCartFrame.this.dispose();    // close this frame
 			}
 		}
@@ -249,8 +253,7 @@ public class ShoppingCartFrame extends JFrame
 		/** Popup a notice window with a specified message. */
 		private void popupNotice(String msg)
 		{
-			JOptionPane.showMessageDialog( ShoppingCartFrame.this, msg,
-					"Message", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog( ShoppingCartFrame.this, msg, "Message", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }

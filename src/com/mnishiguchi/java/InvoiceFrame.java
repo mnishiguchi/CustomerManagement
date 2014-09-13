@@ -51,8 +51,7 @@ public class InvoiceFrame extends JFrame
 		if (inv == null)    // ensure that invoice is not null
 		{
 			JOptionPane.showMessageDialog( this, 
-					"Specified invoice data is empty.", 
-					"Message", JOptionPane.INFORMATION_MESSAGE);
+					"Specified invoice data is empty.", "Message", JOptionPane.INFORMATION_MESSAGE);
 			return;    // quit this procedure right now
 		}
 		

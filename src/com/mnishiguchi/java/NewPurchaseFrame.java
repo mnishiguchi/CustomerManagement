@@ -153,7 +153,7 @@ public class NewPurchaseFrame extends JFrame
 				{
 					popupNotice("Please enter the price of the selected item.");
 					priceField.requestFocus();
-					return;	// quit this procedure right now
+					return;    // quit this procedure right now
 				}
 				else if ( StringChecker.isFloat(amount) == false  )
 				{
@@ -209,6 +209,7 @@ public class NewPurchaseFrame extends JFrame
 			JOptionPane.showMessageDialog( NewPurchaseFrame.this, msg, "Message", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
+	
 	/** When "Others" is selected, moves the focus to the text field. */
 	class RadioSelectedListener implements ItemListener
 	{
