@@ -83,7 +83,7 @@ public class NewPurchaseFrame extends JFrame
 		// ----------- create a Box with a submit button --------------------
 		Box box2 = Box.createHorizontalBox();	  
 		// create a button
-		button1 = new JButton("          Submit          ");
+		button1 = new JButton("Add to Shopping Cart");
 		OnButtonClickListener handle = new OnButtonClickListener();
 		button1.addActionListener(handle);
 		// add button1

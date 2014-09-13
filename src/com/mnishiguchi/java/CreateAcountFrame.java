@@ -73,7 +73,7 @@ public class CreateAcountFrame  extends JFrame
 		addGridItem(panel, radioMs, 1, 4, 1, 1, GridBagConstraints.WEST);	    
 		
 		// create button with event handler
-		button1 = new JButton("OK");
+		button1 = new JButton("Create A New Acount");
 		OnButtonClickListener handle = new OnButtonClickListener();
 		button1.addActionListener(handle);
 		

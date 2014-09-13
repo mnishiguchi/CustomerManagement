@@ -1,4 +1,5 @@
 package com.mnishiguchi.java;
+import java.util.Collection;
 import java.util.Date;
 
 
@@ -11,12 +12,6 @@ public class Purchase
 	private String invoiceNumber;
 	
 	// constructor
-	//public Purchase(Date date, double amount)
-	//{
-	//	this.date = date;
-	//	this.amount = amount;
-	//}
-	
 	public Purchase(Date date, double amount, String invoiceNumber)
 	{
 		this.date = date;

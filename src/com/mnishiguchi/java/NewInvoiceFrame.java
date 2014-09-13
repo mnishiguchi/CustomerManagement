@@ -81,7 +81,7 @@ public class NewInvoiceFrame extends JFrame
 				customer.getLastName() + " - " + customer.getPhoneNumber());
 		
 		// create button with an event handler
-		button1 = new JButton(" => Add Purchase? ");
+		button1 = new JButton("Add Purchase");
 		OnButtonClickListener handle = new OnButtonClickListener();
 		button1.addActionListener(handle);
 		
@@ -153,7 +153,7 @@ public class NewInvoiceFrame extends JFrame
 		
 		// create submit button
 		//JPanel buttonPanel = new JPanel( new BorderLayout() );
-		button2 = new JButton("=> Create a new Invoice");
+		button2 = new JButton("Create a new Invoice");
 		button2.addActionListener(handle);    // reuse event handler
 		//buttonPanel.add(button2, BorderLayout.NORTH);
 		

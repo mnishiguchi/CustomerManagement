@@ -143,7 +143,10 @@ public class ReadFile
 		
 		// get data from the invoice file
 		String filePath = PATH_INVOICE + invoiceNumber + ".txt";
+		if ( exists(filePath) == false ) { return null; }
+
 		ArrayList<String> lines = getDataFromFile(filePath);
+		if ( lines.isEmpty() ) { return null; }
 		
 		String[] data;	// to store processed data temporarily
 		

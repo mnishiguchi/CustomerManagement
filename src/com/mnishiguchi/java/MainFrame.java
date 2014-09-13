@@ -1,5 +1,6 @@
 package com.mnishiguchi.java;
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -19,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 
 /** A frame for the main menu. */
@@ -42,6 +44,16 @@ public class MainFrame extends JFrame
 	
 	public static void main(String[] args)   // program starts from here
 	{
+		UIManager.put("Button.font", new Font("Calibri",Font.PLAIN,16) );
+		UIManager.put("TextField.font", new Font("Arial",Font.PLAIN,14));
+		UIManager.put("Table.font", new Font("Arial",Font.PLAIN,14));
+		UIManager.put("Label.font", new Font("Arial",Font.PLAIN,14));
+		//UIManager.put("RadioButton.font", /* font of your liking */);
+		
+		//UIManager.put("Panel.font", /* font of your liking */);
+
+		//UIManager.put("TableHeader.font", /* font of your liking */);
+		
 		new MainFrame();
 	}
 	
@@ -59,7 +71,7 @@ public class MainFrame extends JFrame
 		mainPanel.setBorder( BorderFactory.createLoweredBevelBorder() );
 		
 		JPanel subPanel = new JPanel();
-		subPanel.setBorder( BorderFactory.createEmptyBorder(6,6,6,6) );
+		subPanel.setBorder( BorderFactory.createEmptyBorder(3,3,3,3) );
 		
 		// create buttons
 		button1 = new JButton("Create A New Account");

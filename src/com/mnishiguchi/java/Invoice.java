@@ -70,6 +70,20 @@ public class Invoice
 		return inv;
 	}
 	
+	/**
+	 * @param purchasedArticles - Stack of Article objects that represents invoice's rows
+	 * @return sum of each row's subtotal
+	 */
+	public double getGrandTotal()
+	{
+		double d = 0.0;
+		for (Article a : this.purchasedArticles)
+		{
+			d += a.getSubTotal();
+		}
+		return d;
+	}
+	
 	// accessor methods
 	public String getInvoiceNumber()
 	{

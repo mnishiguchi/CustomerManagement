@@ -31,8 +31,8 @@ public class PurchaseHistoryFrame extends JFrame
 	private JLabel label1;
 	private JTable table;
 	private JButton button1, button2;
-	Customer c = MainFrame.selectedCustomer;
-	Stack<Purchase> purchaseList;
+	private Customer c = MainFrame.selectedCustomer;
+	private Stack<Purchase> purchaseList;
 	
 	// constructor
 	public PurchaseHistoryFrame()
@@ -46,7 +46,7 @@ public class PurchaseHistoryFrame extends JFrame
 
 		// get ustomer's purchase history
 		purchaseList =  ReadFile.getPurchaseList(c);
-
+		
 		// create a panel with BorderLayout
 		JPanel panel1 = new JPanel();
 		panel1.setLayout(new BorderLayout());
@@ -56,7 +56,7 @@ public class PurchaseHistoryFrame extends JFrame
 		Box box1 = Box.createHorizontalBox();
 		
 		// create button with an event handler
-		button1 = new JButton("=> Add New Purchase");
+		button1 = new JButton("Add New Purchase");
 		OnButtonClickListener handle = new OnButtonClickListener();
 		button1.addActionListener(handle);
 		
@@ -65,12 +65,11 @@ public class PurchaseHistoryFrame extends JFrame
 		box1.add( Box.createHorizontalGlue() );    // to separate components as far as possible
 		box1.add( button1 );
 		box1.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));    // padding
-		this.add(box1, BorderLayout.NORTH);    // add to frame
 		
 		// --------------------- create the table -------------------------------
 		// create a table model	
 		Object[] tableRow = new Object[3];       // [0]=>date; [1]=>amount; [2]=>invoiceNumber
-		Object[] tableHead = {"Date", "Invoice#", "Amount(US$)"};
+		Object[] tableHead = {"Date", "Invoice#", "Subtotal"};
 		DefaultTableModel tableModel = new DefaultTableModel(tableHead, 0);    // initially no row
 		
 		if ( purchaseList == null || purchaseList.isEmpty() )    // ensure that purchaseList is not null
@@ -107,11 +106,20 @@ public class PurchaseHistoryFrame extends JFrame
 		table.getColumnModel().getColumn(2).setPreferredWidth(90); 
 		
 		// add table to scroll pane
-		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
-				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane scroll = new JScrollPane(table);
 		scroll.setBorder(BorderFactory.createLoweredBevelBorder());
+		JPanel tablePanel = new JPanel( new BorderLayout() );
 		
-		this.add(scroll, BorderLayout.CENTER);    // add to frame
+		Box footerBox = Box.createHorizontalBox();  // for Grand Total
+		footerBox.setBorder( BorderFactory.createEmptyBorder(10,0,10,0));
+		footerBox.add( Box.createHorizontalGlue() );
+		footerBox.add( new JLabel("Grand Total : ") );
+		footerBox.add( Box.createHorizontalStrut(15) );
+		double grandTotal = getGrandTotal(purchaseList);
+		footerBox.add( new JLabel( "$" + FORMAT_AMOUNT.format(grandTotal) ) );
+		footerBox.add( Box.createHorizontalStrut(30) );
+		tablePanel.add(scroll, BorderLayout.CENTER);
+		tablePanel.add(footerBox, BorderLayout.SOUTH);
 		
 		// --------------------- create the footer -------------------------------
 		// create buttons with an event handler
@@ -120,9 +128,26 @@ public class PurchaseHistoryFrame extends JFrame
 		JPanel buttonPanel = new JPanel( new BorderLayout() );
 		buttonPanel.add(button2, BorderLayout.NORTH);
 		buttonPanel.setBorder( BorderFactory.createEtchedBorder());
+		
+		this.add(box1, BorderLayout.NORTH);    // add to frame
+		this.add(tablePanel, BorderLayout.CENTER);    // add to frame
 		this.add(buttonPanel, BorderLayout.SOUTH);   // add to frame
 		
 		this.setVisible(true);    // show this frame
+	}
+	
+	/**
+	 * @param purchasedArticles - Stack of Article objects that represents invoice's rows
+	 * @return sum of each row's subtotal
+	 */
+	public double getGrandTotal(Stack<Purchase> purchaseList)
+	{
+		double d = 0.0;
+		for (Purchase p : this.purchaseList)
+		{
+			d += p.getAmount();
+		}
+		return d;
 	}
 	
 	/**
