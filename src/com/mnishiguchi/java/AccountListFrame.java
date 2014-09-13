@@ -59,7 +59,7 @@ public class AccountListFrame extends JFrame
 			tableRow[0] = c.getPrefix();
 			tableRow[1] = c.getLastName();
 			tableRow[2] = c.getFirstName();
-			tableRow[3] = formatPhoneNumber( c.getPhoneNumber());
+			tableRow[3] = formatPhoneNumber( c.getPhoneNumber() );
 			tableRow[4] = c.getZipCode();
 			tableModel.addRow(tableRow);
 		}
@@ -80,8 +80,8 @@ public class AccountListFrame extends JFrame
 		table.getColumnModel().getColumn(0).setPreferredWidth(33);
 		table.getColumnModel().getColumn(1).setPreferredWidth(120);
 		table.getColumnModel().getColumn(2).setPreferredWidth(120); 
-		table.getColumnModel().getColumn(3).setPreferredWidth(100); 
-		table.getColumnModel().getColumn(4).setPreferredWidth(80);
+		table.getColumnModel().getColumn(3).setPreferredWidth(120); 
+		table.getColumnModel().getColumn(4).setPreferredWidth(60);
 		
 		// add table to scroll pane
 		JScrollPane scroll = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 

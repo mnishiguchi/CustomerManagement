@@ -1,6 +1,7 @@
 package com.mnishiguchi.java;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -45,6 +46,7 @@ public class NewInvoiceFrame extends JFrame
 	private JButton button1, button2;
 	private JTextField invoiceField;
 	private String invoiceNumber;
+	private double grandTotal;
 	private Date now;
 	private Customer customer = MainFrame.selectedCustomer;
 	
@@ -108,14 +110,17 @@ public class NewInvoiceFrame extends JFrame
 		}
 		else    // prepare a TableModel for table creation
 		{
+			double subTotal = 0.0;
 			for (Article record : purchasedArticles)
 			{
 				// append to the tableRows array
 				// [0]=>name; [1]=>price; [2]=>qty; [3]=>subTotal; 
 				tableRow[0] = record.getName();
 				tableRow[1] = FORMAT_AMOUNT.format( record.getPrice() );
-				tableRow[2] = record.getQuantity();	    	
-				tableRow[3] = FORMAT_AMOUNT.format( record.getPrice() * record.getQuantity() );
+				tableRow[2] = record.getQuantity();
+				subTotal = record.getPrice() * record.getQuantity();
+				grandTotal += subTotal;
+				tableRow[3] = FORMAT_AMOUNT.format(subTotal);
 				tableModel.addRow(tableRow);
 			}
 		}
@@ -145,31 +150,33 @@ public class NewInvoiceFrame extends JFrame
 		this.add(box1, BorderLayout.NORTH);    // box with label & button
 		this.add(scroll);                                                // table component with text area
 		
-		// ---------------- create the create invoice section -----------------
-		Box footerBox = Box.createHorizontalBox();    // container
+		// ---------------- create the bottom ---------------------------------
+		// footer1
+		Box footerBox1 = Box.createHorizontalBox();  // for Grand Total
+		footerBox1.setBorder( BorderFactory.createEmptyBorder(10,0,10,0));
+		footerBox1.add( Box.createHorizontalGlue() );
+		JLabel totalLabel = new JLabel("Grand Total :     $" + FORMAT_AMOUNT.format(grandTotal) );
+		totalLabel.setFont( new Font("Arial",Font.PLAIN,16) );
+		footerBox1.add( totalLabel );
+		footerBox1.add( Box.createHorizontalStrut(30) );
 		
-		// create a text field for invoice number input
-		invoiceField = new JTextField(10);
-		
-		// create submit button
-		//JPanel buttonPanel = new JPanel( new BorderLayout() );
-		button2 = new JButton("Create a new Invoice");
+		// footer2
+		Box footerBox2 = Box.createHorizontalBox();    // container
+		footerBox2.setBorder( BorderFactory.createEmptyBorder(5,5,5,5) );
+		invoiceField = new JTextField(10);    // for invoice number input
+		button2 = new JButton("Create a new Invoice");    // submit button
 		button2.addActionListener(handle);    // reuse event handler
-		//buttonPanel.add(button2, BorderLayout.NORTH);
+		footerBox2.add( new JLabel("Invoice# : ") );
+		footerBox2.add(invoiceField);
+		footerBox2.add( Box.createHorizontalStrut(10) );
+		footerBox2.add(button2);
 		
-		// add components to footerBox
-		footerBox.add( new JLabel("Invoice# : ") );
-		footerBox.add(invoiceField);
-		footerBox.add( Box.createHorizontalStrut(10) );
-		footerBox.add(button2);
+		Box footerBundle = Box.createVerticalBox();
+		footerBundle.add(footerBox1);
+		footerBundle.add(footerBox2);
 		
-		// add padding to footerBox
-		JPanel footerPadding = new JPanel();
-		footerPadding.setBorder( BorderFactory.createEmptyBorder(2,2,2,2) );
-		footerPadding.add(footerBox);    // add padding
-
-		// add button2 to the frame
-		this.add(footerPadding, BorderLayout.SOUTH);
+		// add footerBundle  to the frame
+		this.add(footerBundle, BorderLayout.SOUTH);
 		this.setVisible(true);		// show this frame
 	}
 	
@@ -224,14 +231,13 @@ public class NewInvoiceFrame extends JFrame
 				
 				// create a new Invoice object
 				now = new Date();   // current date&time
-				double amount = getGrandTotal(purchasedArticles);
 				Invoice inv = new Invoice(invoiceNumber, customer.getPhoneNumber(), 
-						now, amount, purchasedArticles);
+						now, grandTotal, purchasedArticles);
 				
 				WriteFile.writeInvoice(inv);    // create an invoice file with this Invoice object
 				
 				// create a new Purchase object
-				Purchase purchase = new Purchase(now, amount, invoiceNumber);
+				Purchase purchase = new Purchase(now, grandTotal, invoiceNumber);
 				WriteFile.writePurchase(customer, purchase);    // add this purchase to file
 				
 				new InvoiceFrame(inv);    // show this invoice
@@ -244,20 +250,6 @@ public class NewInvoiceFrame extends JFrame
 		{
 			JOptionPane.showMessageDialog( NewInvoiceFrame.this, msg,
 					"Message", JOptionPane.INFORMATION_MESSAGE);
-		}
-		
-		/**
-		 * @param purchasedArticles - Stack of Article objects that represents invoice's rows
-		 * @return sum of each row's subtotal
-		 */
-		private double getGrandTotal(Stack<Article> purchasedArticles)
-		{
-			double d = 0.0;
-			for (Article a : purchasedArticles)
-			{
-				d += a.getSubTotal();
-			}
-			return d;
 		}
 	}
 }
