@@ -46,7 +46,6 @@ public class NewPurchaseFrame extends JFrame
 			rb = (index == 0) ? new JRadioButton(name, true) : new JRadioButton(name);
 			
 			radioButtons.add(rb);
-			group.add( radioButtons.get(index) );
 			index += 1;    // increment index
 		}
 		// create an extra radio button for others
@@ -149,50 +148,47 @@ public class NewPurchaseFrame extends JFrame
 				// ------------------ validate price field --------------------
 				String amount = priceField.getText();	// get a price from user input
 			
-				if ( amount.equals("") )	// ensure text field is not empty
+				if ( amount.equals("") )    // ensure text field is not empty
 				{
-					JOptionPane.showMessageDialog( NewPurchaseFrame.this, 
-							"Please enter  a price", "Message", JOptionPane.INFORMATION_MESSAGE);
+					popupNotice("Please enter the price of the selected item.");
+					priceField.requestFocus();
 					return;	// quit this procedure right now
 				}
 				else if ( StringChecker.isFloat(amount) == false )
 				{
-					JOptionPane.showMessageDialog( NewPurchaseFrame.this, 
-							"Invalid Dollar Amount  (Example : 123.45)", 
-							"Message", JOptionPane.INFORMATION_MESSAGE);
-					return;	// quit this procedure right now
+					popupNotice("Invalid Dollar Amount  (Example : 123.45)");
+					priceField.requestFocus();
+					return;    // quit this procedure right now
 				}
 				// ------------------ process data ----------------------------
-				// get selected article
-				for (JRadioButton rb : radioButtons)
+				for (JRadioButton rb : radioButtons)   // search for the selected article
 				{
 					if ( rb.isSelected() )
 					{
 						selectedRadio = rb;
-						break;
+						break; 
 					}
 				}
-				if ( selectedRadio != null )
+				
+				if ( selectedRadio != null )    // if found, it's one of the regular items.
 				{
 					name = selectedRadio.getText();
 				}
-				else
+				else    // if null, "Others" is selected.
 				{
-					if ( othersField.getText().equals("") )	
+					if ( othersField.getText().equals("") )    // ensure that the field is filled in.
 					{
-						JOptionPane.showMessageDialog( NewPurchaseFrame.this, 
-								"Please enter  the name of this item", "Message", JOptionPane.INFORMATION_MESSAGE);
+						popupNotice("Please enter  the name of this item.");
+						othersField.requestFocus();
 						return;
 					}
-					else name =  othersField.getText();
+					name =  othersField.getText();
 				}
 			
 				try
 				{
-					// get price
-					price =Double.parseDouble( amount );
-					// get quantity
-					quantity = (int) qtySpinner.getValue();
+					price =Double.parseDouble( amount );    // get price
+					quantity = (int) qtySpinner.getValue();    // get quantity
 				}
 				catch (NumberFormatException ex)
 				{
@@ -205,6 +201,11 @@ public class NewPurchaseFrame extends JFrame
 				new NewInvoiceFrame();    // show a new invoice's draft
 				NewPurchaseFrame.this.dispose();    // close this frame	
 			}
+		}
+		/** Pops up a notice window with a specified message. */
+		private void popupNotice(String msg)
+		{
+			JOptionPane.showMessageDialog( NewPurchaseFrame.this, msg, "Message", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }
