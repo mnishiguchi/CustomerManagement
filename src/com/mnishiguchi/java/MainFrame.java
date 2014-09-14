@@ -209,7 +209,7 @@ public class MainFrame extends JFrame
 				{
 					// get a phone number from user input
 					invoiceNumber = JOptionPane.showInputDialog( MainFrame.this, 
-							"Please enter an invoice: ", "Search By Invoice Number", JOptionPane.QUESTION_MESSAGE);
+							"Please enter an invoice number: ", "Search By Invoice Number", JOptionPane.QUESTION_MESSAGE);
 					
 					if (invoiceNumber == null)  return;    // if user clicked on cancel button, end this procedure
 					
