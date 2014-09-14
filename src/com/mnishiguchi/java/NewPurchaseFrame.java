@@ -28,9 +28,8 @@ public class NewPurchaseFrame extends JFrame
 		this.setTitle("Add New Purchase");
 		this.setLocationRelativeTo(null);  // put it at the center of the screen
 	
-		// mainPanel
 		JPanel mainPanel = new JPanel( new GridBagLayout() );
-		mainPanel.setBorder( BorderFactory.createEmptyBorder(12,0,5,0) );
+		mainPanel.setBorder( BorderFactory.createEmptyBorder(15,0,5,0) );
 		
 		// ----------- create a panel with radioButtons --------------------------
 		JPanel radioPanel = new JPanel();
@@ -102,8 +101,11 @@ public class NewPurchaseFrame extends JFrame
 		// add box2 to the mainPanel
 		addGridItem(mainPanel, box2, 0, 2, 1, 1, GridBagConstraints.CENTER);
 		
-		this.add(mainPanel);
-		this.setVisible(true);		// show this frame    
+		JPanel border = new JPanel();
+		border.setBorder( BorderFactory.createLoweredBevelBorder() );
+		border.add(mainPanel);
+		this.add(border);
+		this.setVisible(true);	    // show this frame    
 	}
 	
 	/** Helper Method to add  a components to a specified GridBag cell

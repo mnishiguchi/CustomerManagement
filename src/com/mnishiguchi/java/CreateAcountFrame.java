@@ -41,7 +41,7 @@ public class CreateAcountFrame  extends JFrame
 		// create a panel with the GridBagLayout
 		JPanel panel = new JPanel();
 		panel.setLayout( new GridBagLayout() );
-		panel.setBorder( BorderFactory.createEmptyBorder(9,9,9,9) );
+		panel.setBorder( BorderFactory.createEmptyBorder(30,0,15,45) );    // padding
 		
 		// add button names to the panel
 		addGridItem(panel, new JLabel("Last Name: "), 0, 0, 1, 1, GridBagConstraints.EAST);
@@ -82,7 +82,6 @@ public class CreateAcountFrame  extends JFrame
 		addGridItem(panel, button1, 1, 5, 1, 1, GridBagConstraints.WEST);
 		
 		mainPanel.add(panel);             // add panel to the frame
-		mainPanel.setBorder( BorderFactory.createEmptyBorder(20,0,0,15) );
 		this.add(mainPanel);
 		this.setVisible(true);    // show this frame
 	}
