@@ -27,9 +27,12 @@ public class NewPurchaseFrame extends JFrame
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setTitle("Add New Purchase");
 		this.setLocationRelativeTo(null);  // put it at the center of the screen
-	
-		JPanel mainPanel = new JPanel( new GridBagLayout() );
-		mainPanel.setBorder( BorderFactory.createEmptyBorder(15,0,5,0) );
+		
+		JPanel mainPanel = new JPanel();    // for decorating with bevel
+		mainPanel.setBorder( BorderFactory.createLoweredBevelBorder() );
+		
+		JPanel subPanel = new JPanel( new GridBagLayout() );
+		subPanel.setBorder( BorderFactory.createEmptyBorder(15,0,5,0) );
 		
 		// ----------- create a panel with radioButtons --------------------------
 		JPanel radioPanel = new JPanel();
@@ -71,7 +74,7 @@ public class NewPurchaseFrame extends JFrame
 		addGridItem(radioPanel, othersField, 1, 3, 3, 1, GridBagConstraints.WEST);
 		
 		// add radioPanel  to the mainPanel
-		addGridItem(mainPanel, radioPanel, 0, 0, 1, 1, GridBagConstraints.CENTER);
+		addGridItem(subPanel, radioPanel, 0, 0, 1, 1, GridBagConstraints.CENTER);
 
 		// ----------- create a Box with price & qty fields -------------------
 		Box box1 = Box.createHorizontalBox();	  
@@ -88,7 +91,7 @@ public class NewPurchaseFrame extends JFrame
 		qtySpinner = new JSpinner( new SpinnerNumberModel(0,0,32,1) );
 		box1.add(qtySpinner);
 		// add box1 to the mainPanel
-		addGridItem(mainPanel, box1, 0, 1, 1, 1, GridBagConstraints.CENTER);
+		addGridItem(subPanel, box1, 0, 1, 1, 1, GridBagConstraints.CENTER);
 
 		// ----------- create a Box with a submit button --------------------
 		Box box2 = Box.createHorizontalBox();	  
@@ -99,12 +102,10 @@ public class NewPurchaseFrame extends JFrame
 		// add button1
 		box2.add(button1);
 		// add box2 to the mainPanel
-		addGridItem(mainPanel, box2, 0, 2, 1, 1, GridBagConstraints.CENTER);
+		addGridItem(subPanel, box2, 0, 2, 1, 1, GridBagConstraints.CENTER);
 		
-		JPanel border = new JPanel();
-		border.setBorder( BorderFactory.createLoweredBevelBorder() );
-		border.add(mainPanel);
-		this.add(border);
+		mainPanel.add(subPanel);
+		this.add(mainPanel);
 		this.setVisible(true);	    // show this frame    
 	}
 	

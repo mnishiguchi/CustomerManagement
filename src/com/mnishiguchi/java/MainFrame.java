@@ -42,7 +42,7 @@ public class MainFrame extends JFrame
 	public static String invoiceNumber = "";
 	public static Stack<Article> purchasedArticles = new Stack<Article>();
 	
-    // instance variables
+	// instance variables
 	private JButton button1,  button2, button3, button4, button5;
 	
 	public static void main(String[] args)   // program starts from here
